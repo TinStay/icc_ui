@@ -22,7 +22,6 @@ const firebaseAuthConfig = {
       },
     },
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    firebase.auth.GithubAuthProvider.PROVIDER_ID,
   ],
   signInSuccessUrl: "/",
   credentialHelper: "none",

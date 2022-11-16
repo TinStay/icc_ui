@@ -21,7 +21,6 @@ if (!admin.apps.length) {
       //     process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
       //   client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
       // }),
-      databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
     });
   } catch (e) {
     console.log("Failed to initialize App: " + e);
