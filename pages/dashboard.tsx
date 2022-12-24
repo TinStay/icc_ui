@@ -1,7 +1,15 @@
 import { useAuthUser, withAuthUser, AuthAction } from "next-firebase-auth";
-import Loader from "@/elements/Loader";
+import Loader from "../components/elements/Loader";
+import { NextPage } from "next";
 
-const dashboard = () => {
+// Mantine
+import { Button } from '@mantine/core';
+
+interface Props {
+  
+}
+
+const dashboard: NextPage<Props> = () => {
   //auth user object
   const AuthUser = useAuthUser();
 
