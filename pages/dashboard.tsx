@@ -1,13 +1,14 @@
+import React from "react";
 import { useAuthUser, withAuthUser, AuthAction } from "next-firebase-auth";
-import Loader from "../components/elements/Loader";
+import Loader from "../components/elements/general/Loader";
 import { NextPage } from "next";
+import Navbar from "@/sections/navbar/Navbar";
+import { MenuLinks } from "@/constants";
 
 // Mantine
-import { Button } from '@mantine/core';
+import { Button } from "@mantine/core";
 
-interface Props {
-  
-}
+interface Props {}
 
 const dashboard: NextPage<Props> = () => {
   //auth user object
@@ -17,26 +18,30 @@ const dashboard: NextPage<Props> = () => {
   const handleLogout = () => AuthUser.signOut();
 
   return (
-    <div className="container mx-auto my-10 p-5">
-      <h1 className="text-6xl text-center font-extrabold">Dashboard</h1>
-      <hr className="my-10 text-gray" />
-      <article className="text-center">
-        <h2 className="text-navy font-bold text-3xl">
-          Your E-Mail is{" "}
-          <span className="text-blue hover:underline ">
-            {AuthUser.email ? AuthUser.email : "Anonymous"}.
-          </span>
-          <br />
-          <span className="text-coral">You are a Authenticated!</span>
-        </h2>
+    <div>
+      <Navbar links={MenuLinks} />
 
-        <button
-          className="bg-blue rounded shadow-md p-2 text-white text-lg my-10 font-extrabold"
-          onClick={handleLogout}
-        >
-          LOGOUT
-        </button>
-      </article>
+      <div className="container mx-auto my-10 p-5">
+        <h1 className="text-6xl text-center font-extrabold">Dashboard</h1>
+        <hr className="my-10 text-gray" />
+        <article className="text-center">
+          <h2 className="text-navy font-bold text-3xl">
+            Your E-Mail is{" "}
+            <span className="text-blue hover:underline ">
+              {AuthUser.email ? AuthUser.email : "Anonymous"}.
+            </span>
+            <br />
+            <span className="text-coral">You are a Authenticated!</span>
+          </h2>
+
+          <button
+            className="bg-blue rounded shadow-md p-2 text-white text-lg my-10 font-extrabold"
+            onClick={handleLogout}
+          >
+            LOGOUT
+          </button>
+        </article>
+      </div>
     </div>
   );
 };

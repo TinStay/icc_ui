@@ -21,6 +21,8 @@
     "paths": {
       "@/elements/*": ["components/elements/*"],
       "@/sections/*": ["components/sections/*"],
+      "@/constants": ["utils/constants.tsx"],
+      "@/types": ["utils/types.tsx"],
       "@/firebase/*": ["utils/firebase/*"],
       "@/firebase-client": ["utils/firebase/firebaseClient.js"], 
       "@/firebase-admin": ["utils/firebase/firebaseAdmin.js"], 

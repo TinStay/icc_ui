@@ -4,6 +4,7 @@
       "baseUrl": ".",
       "paths": {
         "@/elements/*": ["components/elements/*"],
+        "@/sections/*": ["components/sections/*"],
         "@/firebase/*": ["utils/firebase/*"],
         "@/firebase-client": ["utils/firebase/firebaseClient.js"], 
         "@/firebase-admin": ["utils/firebase/firebaseAdmin.js"], 

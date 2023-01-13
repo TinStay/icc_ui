@@ -1,8 +1,6 @@
 import React from "react" 
-import Head from "next/head";
-import Link from "next/link";
-import LandingJumbotron from "@/sections/LandingJumbotron";
-
+import LandingJumbotron from "@/sections/landingPage/LandingJumbotron";
+ 
 export default function Home({ data }) {
   //{data} is from getStaticProps() exported below.
   return (

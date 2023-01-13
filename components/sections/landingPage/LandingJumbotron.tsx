@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Logo from "@/elements/general/logo/LogoWithText";
 
 import {
   createStyles,
@@ -127,14 +128,7 @@ export default function LandingJumbotron() {
               </Button>
             </Group>
           </div>
-          <Image
-            src={
-              theme.colorScheme === "light"
-                ? "/ICCLogoBlueText.png"
-                : "ICClogoWhiteText.png"
-            }
-            className={classes.image}
-          />
+          <Logo className={classes.image} />
         </div>
       </Container>
     </div>
