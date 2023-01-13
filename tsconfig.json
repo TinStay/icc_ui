@@ -22,6 +22,7 @@
       "@/elements/*": ["components/elements/*"],
       "@/sections/*": ["components/sections/*"],
       "@/constants": ["utils/constants.tsx"],
+      "@/helpers": ["utils/helpers.tsx"],
       "@/types": ["utils/types.tsx"],
       "@/firebase/*": ["utils/firebase/*"],
       "@/firebase-client": ["utils/firebase/firebaseClient.js"], 

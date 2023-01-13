@@ -17,6 +17,7 @@ import React from "react";
 initAuth();
 
 function MyApp({ Component, pageProps }: AppProps) {
+  // Dark and Light mode
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
@@ -24,6 +25,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   const appTheme: MantineThemeOverride = {
     colorScheme: "light",
     fontFamily: "Madani-Regular, sans-serif",
+    colors: {
+      // Add your color
+      backgroundWhite: ['#F8F9FA'],
+      // or replace default theme color
+      
+    },
     components: {
       Button: {
         defaultProps: {

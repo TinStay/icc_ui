@@ -1,48 +1,64 @@
-import React from "react";
-import { useAuthUser, withAuthUser, AuthAction } from "next-firebase-auth";
-import Loader from "../components/elements/general/Loader";
+import React, { useState } from "react";
+
+// Next
 import { NextPage } from "next";
+import { useAuthUser, withAuthUser, AuthAction } from "next-firebase-auth";
+
+// Components
+import Loader from "../components/elements/general/Loader";
 import Navbar from "@/sections/navbar/Navbar";
-import { MenuLinks } from "@/constants";
+import EnterCleaningCodeModal from "@/sections/dashboard/EnterCleaningCodeModal";
 
 // Mantine
-import { Button } from "@mantine/core";
+import {
+  Box,
+  useMantineTheme,
+  Paper,
+  Title,
+  Text,
+  Container,
+  Flex,
+  Button,
+  Center,
+} from "@mantine/core";
+import { GetBackgroundColorForTheme } from "@/helpers";
 
 interface Props {}
 
-const dashboard: NextPage<Props> = () => {
-  //auth user object
-  const AuthUser = useAuthUser();
+const Dashboard: NextPage<Props> = () => {
+  const [showModal, setShowModal] = useState(false);
 
-  //signout user
-  const handleLogout = () => AuthUser.signOut();
-
+  const theme = useMantineTheme();
   return (
-    <div>
-      <Navbar links={MenuLinks} />
+    <Box
+      sx={{
+        height: "100vh",
+        backgroundColor: GetBackgroundColorForTheme(),
+      }}
+    >
+      <Navbar />
 
-      <div className="container mx-auto my-10 p-5">
-        <h1 className="text-6xl text-center font-extrabold">Dashboard</h1>
-        <hr className="my-10 text-gray" />
-        <article className="text-center">
-          <h2 className="text-navy font-bold text-3xl">
-            Your E-Mail is{" "}
-            <span className="text-blue hover:underline ">
-              {AuthUser.email ? AuthUser.email : "Anonymous"}.
-            </span>
-            <br />
-            <span className="text-coral">You are a Authenticated!</span>
-          </h2>
+      <Container>
+        <Flex justify="space-between" align="center" mb="20px">
+          <Title>My cleanings</Title>
+          <Button onClick={() => setShowModal(true)}>Add cleaning</Button>
+        </Flex>
+        <Paper shadow="xs" radius="lg" p="xl">
+          <Center>
+            <Text c="dimmed">You have no cleanings yet.</Text>
+          </Center>
+        </Paper>
+      </Container>
 
-          <button
-            className="bg-blue rounded shadow-md p-2 text-white text-lg my-10 font-extrabold"
-            onClick={handleLogout}
-          >
-            LOGOUT
-          </button>
-        </article>
-      </div>
-    </div>
+      {/* Enter cleaning code modal */}
+      {showModal && (
+        <EnterCleaningCodeModal
+          opened={showModal}
+          onClose={() => setShowModal(false)}
+          title="Enter cleaning code"
+        />
+      )}
+    </Box>
   );
 };
 
@@ -51,4 +67,4 @@ export default withAuthUser({
   whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
   LoaderComponent: Loader,
   authPageURL: "/login",
-})(dashboard);
+})(Dashboard);
