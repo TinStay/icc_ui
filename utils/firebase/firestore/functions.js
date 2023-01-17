@@ -6,6 +6,15 @@ const db = firebase.firestore(); // mostly for transactions or batches
 
 // functions accessed from components
 
+export const getAllUserSubscriptions = async (uid) => {
+  // const query = db.collection("subscriptions").where("Users", "array-contains", uid)
+  // console.log('query', query)
+  // access a reference
+  // get data
+  // process data
+  // return to components
+};
+
 export const getAllDocs = async (params) => {
   // access a reference
   // get data

@@ -66,6 +66,7 @@ const AuthenticationImage = () => {
           Welcome back to ICC Realm
         </Title>
 
+        {/* Social media loin */}
         <FirebaseAuth />
 
         <Divider

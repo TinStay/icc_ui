@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getAllUserSubscriptions } from "../utils/firebase/firestore/functions";
 
 // Next
 import { NextPage } from "next";
@@ -68,3 +69,10 @@ export default withAuthUser({
   LoaderComponent: Loader,
   authPageURL: "/login",
 })(Dashboard);
+
+// export async function getServerSideProps() {
+//   let query = await getAllUserSubscriptions();
+//   return {
+//     props: {}, // will be passed to the page component as props
+//   };
+// }

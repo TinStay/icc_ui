@@ -10,7 +10,7 @@ const enableMessaging = async () => {
           return false;
         }
         await Notification.requestPermission();
-        console.log(firebase.apps);
+        
         const token = await firebase.messaging().getToken({
           vapidKey:
             "BCwi4AOH8ZBDf_PRDRrrheGXbHl64C34hbKxV_4QKiIjeGR2tD_BTmH5MF6MhccxGLZeGU_8wiKzoqIN-TLUZTQ",
