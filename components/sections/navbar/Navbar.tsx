@@ -54,7 +54,7 @@ const useStyles = createStyles((theme) => ({
     top: HEADER_HEIGHT,
     left: 5,
     right: 5,
-    zIndex: 0,
+    zIndex: 1,
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
     borderTopWidth: 0,

@@ -13,3 +13,4 @@ export const user = (uid) => firebase.firestore().collection("users").doc(uid);
 
 //now time
 export const now = firebase.firestore.Timestamp.now();
+

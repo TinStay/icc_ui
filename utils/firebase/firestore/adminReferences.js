@@ -7,3 +7,4 @@ import admin from "@/firebase-admin";
 // Do not use these for client!
 export const docRef = () =>
   admin.firestore().collection("example").doc("yfvafvaf445");
+

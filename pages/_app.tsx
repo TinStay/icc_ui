@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/globals.css";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import initAuth from "../utils/firebase/auth/initAuth";
+import { CurrentUser, getCurrentUser } from "@/firebase/auth/variables";
 
 // Mantine
 import {
@@ -14,22 +15,27 @@ import {
 } from "@mantine/core";
 import React from "react";
 
+// Context
+import { ConnectedUserContext } from "@/contexts";
+
 initAuth();
 
 function MyApp({ Component, pageProps }: AppProps) {
   // Dark and Light mode
+  const [connectedUser, setConnectedUser] = useState();
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
   const appTheme: MantineThemeOverride = {
-    colorScheme: "light",
-    fontFamily: "Madani-Regular, sans-serif",
+    colorScheme: colorScheme,
+    fontFamily: "'Madani-Regular', sans-serif",
     colors: {
       // Add your color
-      backgroundWhite: ['#F8F9FA'],
+      backgroundWhite: ["#F8F9FA"],
+      primaryBlue: ['#348DF6'],
+      darkBlueText: ['#10316D'],
       // or replace default theme color
-      
     },
     components: {
       Button: {
@@ -47,6 +53,18 @@ function MyApp({ Component, pageProps }: AppProps) {
     },
   };
 
+  useEffect(() => {
+    updateCurrentUserState();
+  }, []);
+
+  const updateCurrentUserState = async () => {
+    let user = await getCurrentUser();
+
+    if (user) {
+      setConnectedUser(user);
+    }
+  };
+
   return (
     <div>
       <Head>
@@ -55,6 +73,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        
       </Head>
 
       {/* APP */}
@@ -62,12 +81,27 @@ function MyApp({ Component, pageProps }: AppProps) {
         colorScheme={colorScheme}
         toggleColorScheme={toggleColorScheme}
       >
-        <MantineProvider theme={appTheme} withGlobalStyles withNormalizeCSS>
-          <Component {...pageProps} />
-        </MantineProvider>
+        <ConnectedUserContext.Provider
+          value={{ connectedUser, setConnectedUser }}
+        >
+          <MantineProvider theme={appTheme} withGlobalStyles withNormalizeCSS>
+            <Component {...pageProps} />
+          </MantineProvider>
+        </ConnectedUserContext.Provider>
       </ColorSchemeProvider>
     </div>
   );
 }
+
+// MyApp.getInitialProps = async (appContext) => {
+//   // calls page's `getInitialProps` and fills `appProps.pageProps`
+//   // const appProps = await App.getInitialProps(appContext);
+//   const AuthUser = await getCurrentUser();
+//   console.log("AuthUser");
+
+//   // const headerData = ....
+
+//   return { props: AuthUser };
+// };
 
 export default MyApp;

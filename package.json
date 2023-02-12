@@ -20,12 +20,15 @@
     "firebase": "^8.10.1",
     "firebase-admin": "^10.0.2",
     "localforage": "^1.9.0",
+    "moment": "^2.29.4",
     "next": "^13.1.0",
     "next-firebase-auth": "^0.14.1-alpha.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^3.0.3",
-    "react-firebaseui": "^5.0.2"
+    "react-firebaseui": "^5.0.2",
+    "react-whatsapp": "^0.3.0",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
