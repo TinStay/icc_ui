@@ -5,7 +5,7 @@ import SubscriptionCleaningBox from "./SubscriptionCleaningBox";
 // TODO: ADD typescript types props -> Subscriptions + Single cleanings
 const CleaningsList = ({ subscriptions }) => {
   return (
-    <Box sx={{ marginTop: "2.5rem" }}>
+    <Box>
       {subscriptions &&
         subscriptions.map((subscription) => (
           <SubscriptionCleaningBox

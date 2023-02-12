@@ -28,6 +28,8 @@ import {
   Button,
   Center,
   createStyles,
+  Loader as MantineLoader,
+  Skeleton,
 } from "@mantine/core";
 import { GetBackgroundColorForTheme } from "@/helpers";
 import { IconPlus } from "@tabler/icons";
@@ -59,6 +61,7 @@ interface Props {}
 const Dashboard: NextPage<Props> = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [subscriptions, setSubscriptions] = useState([]);
+  const [loading, setLoading] = useState(true);
   const theme = useMantineTheme();
   const { classes } = useStyles();
 
@@ -66,9 +69,11 @@ const Dashboard: NextPage<Props> = (props) => {
 
   const getSubscriptions = async () => {
     if (connectedUser) {
+      setLoading(true);
       let documents = await getAllUserSubscriptions(connectedUser.uid);
 
       setSubscriptions(documents);
+      setLoading(false);
     }
   };
 
@@ -97,17 +102,30 @@ const Dashboard: NextPage<Props> = (props) => {
             Add New
           </Button>
         </Flex>
-        {/* Main panel */}
-        {subscriptions.length > 0 ? (
-          <CleaningsList subscriptions={subscriptions} />
-        ) : (
-          // Show default message when there are no cleanings
-          <Paper shadow="xs" radius="lg" p="xl">
-            <Center>
-              <Text c="dimmed">You have no cleanings yet.</Text>
-            </Center>
-          </Paper>
-        )}
+
+        <Box sx={{ marginTop: "1.8rem" }}>
+          {loading ? (
+            <Skeleton visible={loading} height={150} 
+            radius="xl"
+            />
+          ) : (
+            <Box>
+              {/* Main panel */}
+              {subscriptions.length > 0 ? (
+                <CleaningsList subscriptions={subscriptions} />
+              ) : (
+                // Show default message when there are no cleanings
+                <Paper shadow="xs" radius="xl" p="xl">
+                  <Center>
+                    <Text c="dimmed">You have no cleanings yet.</Text>
+                  </Center>
+                </Paper>
+              )}
+            </Box>
+          )}
+          {/* Loader */}
+          {loading && <MantineLoader sx={{margin: "20px auto"}}/>}
+        </Box>
       </Container>
 
       {/* Enter cleaning code modal */}
