@@ -1,3 +1,9 @@
-import { createContext } from 'react'
+import { createContext, Dispatch, SetStateAction } from "react";
 
-export const ConnectedUserContext = createContext()
+interface ConnectedUserContextType {
+  connectedUser: { uid: string };
+  setConnectedUser: Dispatch<SetStateAction<{}>>;
+}
+
+export const ConnectedUserContext =
+  createContext<ConnectedUserContextType | null>(null);

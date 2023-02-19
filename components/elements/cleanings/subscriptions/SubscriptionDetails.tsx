@@ -6,8 +6,9 @@ import {
   useMantineTheme,
   MantineTheme,
   createStyles,
-  Paper,
+  Title,
   Drawer,
+  HoverCard,
 } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
 
@@ -15,21 +16,20 @@ import { Calendar } from "@mantine/dates";
 import { Subscription, Cleaning } from "@/types";
 
 import { Months } from "@/constants";
-import CleaningBox from "./Subscriptions/CleaningBox";
+import CleaningBox from "./CleaningBox";
 import { useMediaQuery } from "@mantine/hooks";
-import CleaningDetails from "./Subscriptions/CleaningDetails";
-import CustomizedPaper from "../general/CustomizedPaper";
+import CleaningDetails from "./CleaningDetails";
+import CustomizedPaper from "../../general/CustomizedPaper";
 
 const useStyles = createStyles((theme) => ({
   subscriptionDetailsContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    mx: "20px",
 
     [theme.fn.largerThan("xs")]: {
       justifyContent: "space-around",
-      marginTop: "2.5rem",
+      marginTop: theme.spacing.xl * 1.5,
     },
     [theme.fn.largerThan("sm")]: {
       flexDirection: "row",
@@ -53,6 +53,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.xl,
   },
   cleaningsListContainer: {
+    margin: "30px 0",
     [theme.fn.largerThan("sm")]: {
       margin: "0 10px",
     },
@@ -98,7 +99,6 @@ const SubscriptionDetails = ({ subscription }: Props) => {
     setActiveCleaning(cleaning);
     // Open drawer
     setShowCleaningDetails(true);
-
   };
 
   // Style calendar days
@@ -133,14 +133,56 @@ const SubscriptionDetails = ({ subscription }: Props) => {
     return null;
   }, []);
 
+  const getDayWithHoverCard = (date: Date) => {
+    let displayDay = <Box>{date.getDate()}</Box>;
+
+    // Display more cleaning info to user on hover
+    if (
+      cleaningDates.find(
+        (cleaningDate) =>
+          cleaningDate.toLocaleDateString() === date.toLocaleDateString()
+      )
+    )
+      displayDay = (
+        <Box onClick={() => selectDateFromCalendar(date)}>
+          <Box>{date.getDate()}</Box>
+          {/* <HoverCard width={240} shadow="md" >
+          <HoverCard.Target>
+            <Box>{date.getDate()}</Box>
+          </HoverCard.Target>
+          <HoverCard.Dropdown>
+            Hover card is revealed when user hovers over target element, it will
+            be hidden once mouse is not over both target and dropdown elements
+          </HoverCard.Dropdown>
+        </HoverCard> */}
+        </Box>
+      );
+
+    return displayDay;
+  };
+
+  const selectDateFromCalendar = (date: Date) => {
+    // Find selected date amongst all cleanings
+    let cleaning = subscription.AllCleanings["2023"][Months.Feb].find(
+      (cl) =>
+        cl.Date.toDate().toLocaleDateString() === date.toLocaleDateString()
+    );
+    // Open cleaning details on date clicked
+    setActiveCleaning(cleaning)
+    setShowCleaningDetails(true);
+
+  };
+
   return (
     <Box my={theme.spacing.xl} className={classes.subscriptionDetailsContainer}>
+      {/* Calendar */}
       <CustomizedPaper>
         <Calendar
           multiple
           value={cleaningDates}
           onChange={() => {}}
-          // onChange={setValue}
+          // onChange={date => console.log('object :>> ', date)}
+          // onDayMouseEnter={date => console.log(date)}
           size={isDesktopView ? "md" : "sm"}
           preventFocus
           classNames={{
@@ -148,8 +190,10 @@ const SubscriptionDetails = ({ subscription }: Props) => {
             day: classes.calendarDay,
           }}
           dayStyle={(date) => getStyleForDate(date)}
+          renderDay={(date) => getDayWithHoverCard(date)}
         />
       </CustomizedPaper>
+
       {/* Cleanings list */}
       <Box className={classes.cleaningsListContainer}>
         {subscription &&
@@ -166,7 +210,7 @@ const SubscriptionDetails = ({ subscription }: Props) => {
       <Drawer
         opened={showCleaningDetails}
         onClose={() => setShowCleaningDetails(false)}
-        title="House cleaning"
+        title={<Title order={4}>Cleaning details</Title>}
         position="right"
         overlayColor={
           theme.colorScheme === "dark"

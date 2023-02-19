@@ -7,11 +7,14 @@ import {
   useMantineTheme,
   MantineTheme,
   createStyles,
+  Title,
 } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons";
+import { IconSortAscending2 } from "@tabler/icons";
+import { IconUser } from "@tabler/icons";
 
 // Types
-import { Cleaning } from "@/types"
+import { Cleaning } from "@/types";
 
 import moment from "moment";
 
@@ -33,8 +36,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 type Props = {
-  cleaningInfo: Cleaning,
-  onShowDetails: () => void
+  cleaningInfo: Cleaning;
+  onShowDetails: () => void;
 };
 
 const CleaningBox = ({ cleaningInfo, onShowDetails }: Props) => {
@@ -43,29 +46,37 @@ const CleaningBox = ({ cleaningInfo, onShowDetails }: Props) => {
   const { classes } = useStyles();
 
   // Label values
-  let cleaningDate: string = moment(cleaningInfo.Date.toDate()).format("DD.MM");
+  let cleaningDate: string = moment(cleaningInfo.Date.toDate()).format(
+    " DD MMMM, dddd"
+  );
   let cleaningHoursLabel: string = `${cleaningInfo.Time.From} - ${cleaningInfo.Time.To}`;
 
   return (
     <Paper
       radius="xl"
-      p="lg"
+      px="lg"
+      py="md"
       mb="lg"
       withBorder
       className={classes.cleaningBoxPaper}
       onClick={onShowDetails}
     >
-      <Box sx={{ flexGrow: 0 }}>
-        {/* Date */}
-        <Text fw={700} mb="3px">
-          {cleaningDate}
-        </Text>
-
-        {/* Time */}
-        <Text fz="sm" c="dimmed">
-          {cleaningHoursLabel}
-        </Text>
-
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "end",
+          textAlign: "center",
+          flexGrow: 0,
+          padding: "0 8px",
+        }}
+      >
+        {/* Cleaning Hours */}
+        <Title order={1} sx={{ color: "" }} >
+          5
+        </Title>
+        <Title order={5}  >
+          /15
+        </Title>
       </Box>
 
       {/* Vertical divider */}
@@ -73,17 +84,40 @@ const CleaningBox = ({ cleaningInfo, onShowDetails }: Props) => {
         size="md"
         orientation="vertical"
         color={theme.colors.indigo[5]}
-        sx={{ margin: "0 10px", flexGrow: 0 }}
+        sx={{ margin: "0 15px", flexGrow: 0 }}
       />
 
-      <Box sx={{ flexGrow: 1 }}>
-        {/* Cleaning title */}
-        <Text fw={700} mb="3px">
-          Housekeeping
+      <Box sx={{ flexGrow: 0, width: "200px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* Date */}
+          <Text fw={700} mb="2px">
+            {cleaningDate}
+          </Text>
+        </Box>
+        {/* Time */}
+        <Text fz="sm" c="dimmed" mb="5px">
+          {cleaningHoursLabel}
         </Text>
-        
-        {/* Cleaning priority */}
-        <Text fz="sm"> Bathroom & Kitchen priority</Text>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: " start",
+            marginTop: "3px",
+          }}
+        >
+          <IconSortAscending2 />
+          <Text fz="sm" sx={{ marginLeft: "3px" }}>
+            {" "}
+            Bathroom & Kitchen
+          </Text>
+        </Box>
       </Box>
 
       {/* Open cleaning button */}

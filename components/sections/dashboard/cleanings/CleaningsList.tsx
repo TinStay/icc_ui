@@ -13,6 +13,8 @@ const CleaningsList = ({ subscriptions }) => {
             key={subscription}
           />
         ))}
+
+      
     </Box>
   );
 };

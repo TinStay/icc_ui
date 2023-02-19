@@ -6,14 +6,15 @@ import { GetAddressString } from "@/helpers";
 
 // Components
 import CleaningHoursSemiCircle from "@/elements/cleanings/general/CleaningHoursCircle";
-import SubscriptionTypeBadge from "@/elements/cleanings/Subscriptions/SubscriptionTypeBadge";
+import SubscriptionTypeBadge from "@/elements/cleanings/subscriptions/SubscriptionTypeBadge";
 import CleaningTypesBadgeList from "@/elements/cleanings/general/CleaningTypesBadgeList";
-import SubscriptionDetails from "@/elements/cleanings/SubscriptionDetails";
-
+import SubscriptionDetails from "@/elements/cleanings/subscriptions/SubscriptionDetails";
+import CustomizedPaper from "@/elements/general/CustomizedPaper";
 // Mantine
 import {
   Paper,
   Text,
+  Title,
   Box,
   createStyles,
   useMantineTheme,
@@ -22,6 +23,7 @@ import {
   Space,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import { IconUsers, IconRotateRectangle } from "@tabler/icons";
 
 const useStyles = createStyles((theme) => ({
   containerHeader: {
@@ -30,8 +32,10 @@ const useStyles = createStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     cursor: "pointer",
+    marginTop: "12px",
 
     [theme.fn.largerThan("xs")]: {
+      marginTop: "0px",
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
@@ -64,8 +68,8 @@ const SubscriptionCleaningBox = ({ subscriptionData }: Props) => {
   const { classes } = useStyles();
 
   return (
-    <Paper
-      p="xl"
+    <CustomizedPaper
+      p={isDesktopView ? "xl" : "sm"}
       radius="xl"
       shadow="lg"
       sx={{
@@ -88,7 +92,7 @@ const SubscriptionCleaningBox = ({ subscriptionData }: Props) => {
         {/* Monthly hours semi circle */}
         <Space h="md" />
         <CleaningHoursSemiCircle>
-          <Text>{subscriptionData?.MonthlyHours}</Text>
+          <Title order={2}>{subscriptionData?.MonthlyHours}</Title>
           <Text>monthly hours</Text>
         </CleaningHoursSemiCircle>
         <Space h="md" />
@@ -103,6 +107,30 @@ const SubscriptionCleaningBox = ({ subscriptionData }: Props) => {
               types={subscriptionData?.AllCleaningTypes}
             />
           </Box>
+          <Box sx={{ display: "flex", marginTop: theme.spacing.xs }}>
+            {isDesktopView && (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginRight: theme.spacing.xl,
+                }}
+              >
+                <IconRotateRectangle />
+                <Text fz="md" ml={5}>
+                  bi-weekly
+                </Text>
+              </Box>
+            )}
+            {isDesktopView && (
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <IconUsers />
+                <Text fz="md" ml={5}>
+                  2 cleaners
+                </Text>
+              </Box>
+            )}
+          </Box>
         </Box>
       </Box>
 
@@ -110,7 +138,7 @@ const SubscriptionCleaningBox = ({ subscriptionData }: Props) => {
       <Collapse in={showDetails}>
         <SubscriptionDetails subscription={subscriptionData} />
       </Collapse>
-    </Paper>
+    </CustomizedPaper>
   );
 };
 

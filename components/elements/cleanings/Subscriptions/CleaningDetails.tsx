@@ -6,6 +6,7 @@ import {
   Text,
   createStyles,
   Space,
+  Title,
   MantineTheme,
   useMantineTheme,
 } from "@mantine/core";
@@ -13,13 +14,14 @@ import { useMediaQuery } from "@mantine/hooks";
 
 import { GetAddressString } from "@/helpers";
 // Types
-import { Cleaning } from "@/types";
+import { Cleaning, CleaningStatus } from "@/types";
 
 // Components
 import CleaningHoursSemiCircle from "../general/CleaningHoursCircle";
 import CleaningTypesBadgeList from "../general/CleaningTypesBadgeList";
 import CustomizedPaper from "@/elements/general/CustomizedPaper";
 import CleanerInfoBox from "../general/CleanerInfoBox";
+import CleaningStatusChip from "../general/CleaningStatusChip";
 
 const useStyles = createStyles((theme) => ({
   drawerContainer: {
@@ -50,7 +52,7 @@ const CleaningDetails = ({ cleaning }: Props) => {
   const endTime = cleaning?.Time.To || "";
   const date =
     moment(cleaning?.Date?.toDate()).format("DD.MM.YYYY (dddd)") || "";
-  const status = cleaning?.Status || "";
+  const status: CleaningStatus = cleaning?.Status;
   const priority = cleaning?.Priority || "";
   const notes = cleaning?.Notes || "";
   const cleaners = cleaning?.Cleaners || [];
@@ -80,7 +82,7 @@ const CleaningDetails = ({ cleaning }: Props) => {
         {/* Cleaning hours */}
         <Space w={isDesktopView ? "xl" : "sm"} />
         <CleaningHoursSemiCircle>
-          <Text fz="xl">{`${cleaning?.Hours}h`}</Text>
+          <Title order={2}>{`${cleaning?.Hours}h`}</Title>
         </CleaningHoursSemiCircle>
         <Space w={isDesktopView ? "xl" : "sm"} />
 
@@ -96,43 +98,48 @@ const CleaningDetails = ({ cleaning }: Props) => {
       <Space h="md" />
 
       {/* Other information */}
-      <Box sx={{ width: "100%" }}>
-        <CustomizedPaper>
-          {/* Status */}
-          <HeaderAndText title="Status" text={status} />
-          <Space h="md" />
+      <CustomizedPaper sx={{ width: "100%" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           {/* Date */}
           <HeaderAndText title="Date" text={date} />
-          <Space h="md" />
 
-          {/* Cleaning Priority */}
-          <HeaderAndText title="Priority" text={priority} />
-          <Space h="md" />
+          {/* Status */}
+          <CleaningStatusChip status={status} />
+        </Box>
+        <Space h="md" />
 
-          {/* Notes */}
-          <HeaderAndText title="Notes" text={notes} />
-          <Space h="md" />
+        {/* Cleaning Priority */}
+        <HeaderAndText title="Priority" text={priority} />
+        <Space h="md" />
 
-          {/* Cleaners */}
-          <HeaderAndContent
-            title={`Cleaner${cleaners.length > 0 ? "s" : ""}`}
-            content={
-              cleaners ? (
-                cleaners.map((cleanerInfo) => (
-                  <CleanerInfoBox
-                    cleaner={cleanerInfo}
-                    openWhatsapp={openWhatsappChat}
-                    key={cleanerInfo.ID}
-                  />
-                ))
-              ) : (
-                <Text>There is no cleaner information available.</Text>
-              )
-            }
-          />
-          <Space h="md" />
-        </CustomizedPaper>
-      </Box>
+        {/* Notes */}
+        <HeaderAndText title="Notes" text={notes} />
+        <Space h="md" />
+
+        {/* Cleaners */}
+        <HeaderAndContent
+          title={`Cleaner${cleaners.length > 0 ? "s" : ""}`}
+          content={
+            cleaners ? (
+              cleaners.map((cleanerInfo) => (
+                <CleanerInfoBox
+                  cleaner={cleanerInfo}
+                  openWhatsapp={openWhatsappChat}
+                  key={cleanerInfo.ID}
+                />
+              ))
+            ) : (
+              <Text>There is no cleaner information available.</Text>
+            )
+          }
+        />
+      </CustomizedPaper>
     </Box>
   );
 };

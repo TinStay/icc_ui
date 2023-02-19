@@ -11,6 +11,7 @@ export interface Subscription {
   Notes: string;
   DefaultPriority: string;
   Users: string[];
+  ActivationCode: string;
 }
 
 export interface CleaningsPerYear {
@@ -23,6 +24,8 @@ export interface MonthlyCleanings {
 
 export interface Cleaning {
   ID: string;
+  CreatedAt: Date;
+  UpdatedAt: Date;
   Status: CleaningStatus;
   Address: JobAddress;
   Hours: number;

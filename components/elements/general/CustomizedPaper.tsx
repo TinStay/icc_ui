@@ -19,7 +19,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const CustomizedPaper = ({ children }) => {
+const CustomizedPaper = ({ children, ...props }) => {
   const theme: MantineTheme = useMantineTheme();
   const { classes } = useStyles();
 
@@ -32,6 +32,7 @@ const CustomizedPaper = ({ children }) => {
       p={isDesktopView ? "xl" : "sm"}
       withBorder
       className={classes.calendarPaper}
+      {...props}
     >
       {children}
     </Paper>

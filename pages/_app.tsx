@@ -13,6 +13,7 @@ import {
   ColorScheme,
   MantineColor,
 } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
 import React from "react";
 
 // Context
@@ -22,7 +23,7 @@ initAuth();
 
 function MyApp({ Component, pageProps }: AppProps) {
   // Dark and Light mode
-  const [connectedUser, setConnectedUser] = useState();
+  const [connectedUser, setConnectedUser] = useState({ uid: "" });
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
@@ -30,11 +31,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   const appTheme: MantineThemeOverride = {
     colorScheme: colorScheme,
     fontFamily: "'Madani-Regular', sans-serif",
+    black: "#10316D",
     colors: {
       // Add your color
       backgroundWhite: ["#F8F9FA"],
-      primaryBlue: ['#348DF6'],
-      darkBlueText: ['#10316D'],
+      primaryBlue: ["#348DF6"],
+      darkBlueText: ["#10316D"],
       // or replace default theme color
     },
     components: {
@@ -50,6 +52,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           color: "#348DF6",
         },
       },
+      Divider: {
+        defaultProps: {
+          color: "#eeeeee",
+        },
+      },
     },
   };
 
@@ -58,7 +65,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   const updateCurrentUserState = async () => {
-    let user = await getCurrentUser();
+    let user: any = await getCurrentUser();
 
     if (user) {
       setConnectedUser(user);
@@ -73,7 +80,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
-        
       </Head>
 
       {/* APP */}
@@ -85,7 +91,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           value={{ connectedUser, setConnectedUser }}
         >
           <MantineProvider theme={appTheme} withGlobalStyles withNormalizeCSS>
-            <Component {...pageProps} />
+            <NotificationsProvider>
+              <Component {...pageProps} />
+            </NotificationsProvider>
           </MantineProvider>
         </ConnectedUserContext.Provider>
       </ColorSchemeProvider>

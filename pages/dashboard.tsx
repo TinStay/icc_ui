@@ -7,14 +7,13 @@ import { ConnectedUserContext } from "@/contexts";
 
 // Next
 import { NextPage } from "next";
-import { useAuthUser, withAuthUser, AuthAction } from "next-firebase-auth";
+import { withAuthUser, AuthAction } from "next-firebase-auth";
 
 // Components
 import Loader from "../components/elements/general/Loader";
 import Navbar from "@/sections/navbar/Navbar";
 import EnterCleaningCodeModal from "@/sections/dashboard/EnterCleaningCodeModal";
 import CleaningsList from "@/sections/dashboard/cleanings/CleaningsList";
-import SubscriptionCleaningBox from "@/sections/dashboard/cleanings/SubscriptionCleaningBox";
 
 // Mantine
 import {
@@ -31,12 +30,14 @@ import {
   Loader as MantineLoader,
   Skeleton,
 } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+
 import { GetBackgroundColorForTheme } from "@/helpers";
 import { IconPlus } from "@tabler/icons";
 
 const useStyles = createStyles((theme) => ({
   subHeader: {
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     gap: "20px",
@@ -47,8 +48,9 @@ const useStyles = createStyles((theme) => ({
   },
 
   subHeaderButton: {
-    width: "80%",
-    margin: "0 auto",
+    // width: "80%",
+    margin: "0 ",
+    padding: "0 12px",
     [theme.fn.largerThan("xs")]: {
       width: "auto",
       margin: "0",
@@ -82,6 +84,10 @@ const Dashboard: NextPage<Props> = (props) => {
     getSubscriptions();
   }, [connectedUser]);
 
+  const isDesktopView: boolean = useMediaQuery(
+    `(min-width: ${theme.breakpoints.xs}px)`
+  );
+
   return (
     <Box
       sx={{
@@ -96,18 +102,16 @@ const Dashboard: NextPage<Props> = (props) => {
           <Title>My cleanings</Title>
           <Button
             className={classes.subHeaderButton}
-            leftIcon={<IconPlus />}
+            rightIcon={<IconPlus />}
             onClick={() => setShowModal(true)}
           >
-            Add New
+            Add          
           </Button>
         </Flex>
 
         <Box sx={{ marginTop: "1.8rem" }}>
           {loading ? (
-            <Skeleton visible={loading} height={150} 
-            radius="xl"
-            />
+            <Skeleton visible={loading} height={150} radius="xl" />
           ) : (
             <Box>
               {/* Main panel */}
@@ -124,7 +128,7 @@ const Dashboard: NextPage<Props> = (props) => {
             </Box>
           )}
           {/* Loader */}
-          {loading && <MantineLoader sx={{margin: "20px auto"}}/>}
+          {loading && <MantineLoader sx={{ margin: "20px auto" }} />}
         </Box>
       </Container>
 
@@ -133,7 +137,11 @@ const Dashboard: NextPage<Props> = (props) => {
         <EnterCleaningCodeModal
           opened={showModal}
           onClose={() => setShowModal(false)}
-          title="Enter cleaning code"
+          onSuccess={() => {
+            getSubscriptions()
+            setShowModal(false)
+          }}
+          title="Enter activation code"
         />
       )}
     </Box>

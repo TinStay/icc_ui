@@ -1,6 +1,4 @@
 import { HeaderSearchLink, CleaningStatus } from "./types";
-import { useMediaQuery } from "@mantine/hooks";
-import { useMantineTheme, MantineTheme } from "@mantine/core";
 
 // Firestore
 export const FirestoreCollections = {
@@ -18,6 +16,7 @@ export const CleaningTypes = {
   GARDENCLEANING: "Garden cleaning",
   CARCLEANING: "Car cleaning",
 };
+
 
 // Cleaning status constants
 export const CleaningStatusUpcoming: CleaningStatus = "Upcoming"
