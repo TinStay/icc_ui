@@ -14,7 +14,7 @@ import { useMediaQuery } from "@mantine/hooks";
 
 import { GetAddressString } from "@/helpers";
 // Types
-import { Cleaning, CleaningStatus } from "@/types";
+import { Cleaning, CleaningStatus, Subscription } from "@/types";
 
 // Components
 import CleaningHoursSemiCircle from "../general/CleaningHoursCircle";
@@ -36,9 +36,10 @@ const useStyles = createStyles((theme) => ({
 
 type Props = {
   cleaning: Cleaning;
+  subscription: Subscription;
 };
 
-const CleaningDetails = ({ cleaning }: Props) => {
+const CleaningDetails = ({ cleaning, subscription }: Props) => {
   // Styles
   const theme: MantineTheme = useMantineTheme();
   const { classes } = useStyles();
@@ -53,9 +54,14 @@ const CleaningDetails = ({ cleaning }: Props) => {
   const date =
     moment(cleaning?.Date?.toDate()).format("DD.MM.YYYY (dddd)") || "";
   const status: CleaningStatus = cleaning?.Status;
-  const priority = cleaning?.Priority || "";
-  const notes = cleaning?.Notes || "";
-  const cleaners = cleaning?.Cleaners || [];
+  const priority = cleaning?.Priority || subscription.DefaultPriority;
+  const notes = cleaning?.Notes || subscription.Notes;
+  const cleaningTypes =
+    (cleaning?.CleaningTypes.length > 0 && cleaning.CleaningTypes) ||
+    subscription.DefaultCleaningTypes;
+  const cleaners =
+    (cleaning?.Cleaners.length > 0 && cleaning?.Cleaners) ||
+    subscription.Cleaners;
 
   const openWhatsappChat = (targetPhone) => {
     // Formatted address for text
@@ -93,7 +99,7 @@ const CleaningDetails = ({ cleaning }: Props) => {
       {/* Cleaning types */}
       <Space h="md" />
       <Box sx={{ textAlign: "center" }}>
-        <CleaningTypesBadgeList types={cleaning.CleaningTypes} />
+        <CleaningTypesBadgeList types={cleaningTypes} />
       </Box>
       <Space h="md" />
 

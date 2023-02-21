@@ -3,37 +3,11 @@ import { Box, Badge, Text, useMantineTheme, MantineTheme } from "@mantine/core";
 import { CleaningType } from "@/types";
 import { CleaningTypes } from "@/constants";
 import { useMediaQuery } from "@mantine/hooks";
+import { getColorForType } from "@/helpers";
 
 const CleaningTypeChip = ({ type, readOnly }) => {
   const theme: MantineTheme = useMantineTheme();
 
-  const getColorForType = (type: CleaningType) => {
-    switch (type) {
-      case CleaningTypes.HOUSECLEANING:
-        return "indigo";
-      case CleaningTypes.HOUSEKEEPING:
-        return "yellow";
-        break;
-      case CleaningTypes.DEEPCLEANING:
-        return "orange";
-        break;
-      case CleaningTypes.WINDOWSCLEANING:
-        return "grape";
-        break;
-      case CleaningTypes.CARPETCLEANING:
-        return "gray";
-        break;
-      case CleaningTypes.GARDENCLEANING:
-        return "green";
-        break;
-      case CleaningTypes.CARCLEANING:
-        return "purple";
-        break;
-
-      default:
-        break;
-    }
-  };
   const isDesktopView: boolean = useMediaQuery(
     `(min-width: ${theme.breakpoints.xs}px)`
   );

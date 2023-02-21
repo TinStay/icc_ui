@@ -6,10 +6,13 @@ export interface Subscription {
   Address: JobAddress;
   SubscriptionType: SubscriptionType;
   MonthlyHours: number;
+  CleaningFrequency: CleaningFrequency;
   AllCleanings: CleaningsPerYear;
   AllCleaningTypes: CleaningType[];
-  Notes: string;
+  DefaultCleaningTypes: CleaningType[];
   DefaultPriority: string;
+  Notes: string;
+  Cleaners: Cleaner[] | [];
   Users: string[];
   ActivationCode: string;
 }
@@ -27,7 +30,7 @@ export interface Cleaning {
   CreatedAt: Date;
   UpdatedAt: Date;
   Status: CleaningStatus;
-  Address: JobAddress;
+  Address: JobAddress | null;
   Hours: number;
   Date: any;
   Time: {
@@ -69,6 +72,14 @@ export type CleaningType =
   | "Deep cleaning";
 
 export type SubscriptionType = "Starter" | "Standard" | "Deluxe" | "Custom";
+
+export type CleaningFrequency =
+  | "Weekly"
+  | "Bi-weekly"
+  | "3 times a month"
+  | "Once a month"
+  | "More than 5 times a month"
+  | "Less than 5 times a month"
 
 export type CleaningStatus = "Finished" | "Ongoing" | "Upcoming";
 

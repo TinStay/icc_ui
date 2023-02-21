@@ -3,7 +3,7 @@ import "firebase/firestore";
 import { docRef, user, now } from "@/FS-client-refs";
 import { Subscription } from "@/types";
 import { getCurrentUser } from "../auth/variables";
-
+import { dummySubscriptionData } from "../../dummyData"; 
 const db = firebase.firestore(); // mostly for transactions or batches
 const subscriptionsRef = db.collection("subscriptions");
 
@@ -112,7 +112,6 @@ function randomDate(start, end) {
 // SetSubscriptionDocument("5XyskUDedaSFNE65T2Kg", dummySubscriptionData)
 
 // Cheetsheet
-
 // 3.2. Modify a Part of the Document
 // db.collection("todos").doc("afdghrujfkhotdf").update({
 //   task2: "follow LucidMach on twitter"

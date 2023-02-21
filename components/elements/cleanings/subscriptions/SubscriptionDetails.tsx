@@ -74,16 +74,15 @@ const getCleaningDatesPerYearAndMonth = (
 
 type Props = {
   subscription: Subscription;
+  showCleaningDetails: (cleaning) => void
 };
 
-const SubscriptionDetails = ({ subscription }: Props) => {
+const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
   // State & Variables
   const [cleaningDates, setCleaningDates] = useState<Date[]>(
     getCleaningDatesPerYearAndMonth(subscription, "2023", Months.Feb)
   );
-  const [activeCleaning, setActiveCleaning] = useState<Cleaning | null>(null);
-  const [showCleaningDetails, setShowCleaningDetails] =
-    useState<boolean>(false);
+  
 
   const theme: MantineTheme = useMantineTheme();
 
@@ -95,10 +94,8 @@ const SubscriptionDetails = ({ subscription }: Props) => {
 
   // Open specific cleaning details in a drawer
   const onShowCleaningDetails = (cleaning: Cleaning) => {
-    // Save target cleaning information to state
-    setActiveCleaning(cleaning);
-    // Open drawer
-    setShowCleaningDetails(true);
+    // Save target cleaning information and show details drawer 
+    showCleaningDetails(cleaning)
   };
 
   // Style calendar days
@@ -168,9 +165,7 @@ const SubscriptionDetails = ({ subscription }: Props) => {
         cl.Date.toDate().toLocaleDateString() === date.toLocaleDateString()
     );
     // Open cleaning details on date clicked
-    setActiveCleaning(cleaning)
-    setShowCleaningDetails(true);
-
+    showCleaningDetails(cleaning)
   };
 
   return (
@@ -201,31 +196,14 @@ const SubscriptionDetails = ({ subscription }: Props) => {
             <CleaningBox
               key={cleaning.ID}
               cleaningInfo={cleaning}
+              monthlyHours={subscription.MonthlyHours}
+              defaultCleaningTypes={subscription.DefaultCleaningTypes}
               onShowDetails={() => onShowCleaningDetails(cleaning)}
             />
           ))}
       </Box>
 
-      {/* Cleaning details drawer */}
-      <Drawer
-        opened={showCleaningDetails}
-        onClose={() => setShowCleaningDetails(false)}
-        title={<Title order={4}>Cleaning details</Title>}
-        position="right"
-        overlayColor={
-          theme.colorScheme === "dark"
-            ? theme.colors.dark[9]
-            : theme.colors.gray[2]
-        }
-        overlayOpacity={0.55}
-        overlayBlur={5}
-        transition="slide-left"
-        padding="xl"
-        size="xl"
-      >
-        {/* Drawer content */}
-        <CleaningDetails cleaning={activeCleaning} />
-      </Drawer>
+      
     </Box>
   );
 };

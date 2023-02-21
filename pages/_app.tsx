@@ -32,11 +32,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     colorScheme: colorScheme,
     fontFamily: "'Madani-Regular', sans-serif",
     black: "#10316D",
+    primaryShade: 6,
     colors: {
       // Add your color
       backgroundWhite: ["#F8F9FA"],
       primaryBlue: ["#348DF6"],
       darkBlueText: ["#10316D"],
+      lightBlueText: ["#2164de"],
       // or replace default theme color
     },
     components: {

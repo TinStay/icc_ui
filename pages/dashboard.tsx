@@ -12,7 +12,7 @@ import { withAuthUser, AuthAction } from "next-firebase-auth";
 // Components
 import Loader from "../components/elements/general/Loader";
 import Navbar from "@/sections/navbar/Navbar";
-import EnterCleaningCodeModal from "@/sections/dashboard/EnterCleaningCodeModal";
+import EnterCleaningCodeModal from "@/sections/dashboard/components/EnterCleaningCodeModal";
 import CleaningsList from "@/sections/dashboard/cleanings/CleaningsList";
 
 // Mantine
@@ -97,7 +97,7 @@ const Dashboard: NextPage<Props> = (props) => {
     >
       <Navbar />
 
-      <Container>
+      <Container sx={{ height: "100%" }}>
         <Flex className={classes.subHeader}>
           <Title>My cleanings</Title>
           <Button
@@ -105,7 +105,7 @@ const Dashboard: NextPage<Props> = (props) => {
             rightIcon={<IconPlus />}
             onClick={() => setShowModal(true)}
           >
-            Add          
+            Add
           </Button>
         </Flex>
 
@@ -138,8 +138,8 @@ const Dashboard: NextPage<Props> = (props) => {
           opened={showModal}
           onClose={() => setShowModal(false)}
           onSuccess={() => {
-            getSubscriptions()
-            setShowModal(false)
+            getSubscriptions();
+            setShowModal(false);
           }}
           title="Enter activation code"
         />

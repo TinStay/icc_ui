@@ -1,4 +1,6 @@
-import { HeaderSearchLink, CleaningStatus } from "./types";
+import { HeaderSearchLink, CleaningStatus, CleaningFrequency } from "./types";
+
+export const appVersion = "0.0.5";
 
 // Firestore
 export const FirestoreCollections = {
@@ -17,11 +19,20 @@ export const CleaningTypes = {
   CARCLEANING: "Car cleaning",
 };
 
-
 // Cleaning status constants
-export const CleaningStatusUpcoming: CleaningStatus = "Upcoming"
-export const CleaningStatusOngoing: CleaningStatus = "Ongoing"
-export const CleaningStatusFinished: CleaningStatus = "Finished"
+export const CleaningStatusUpcoming: CleaningStatus = "Upcoming";
+export const CleaningStatusOngoing: CleaningStatus = "Ongoing";
+export const CleaningStatusFinished: CleaningStatus = "Finished";
+
+// Cleaning frequency constants
+export const CleaningFrequencyWeekly: CleaningFrequency = "Weekly";
+export const CleaningFrequencyBiWeekly: CleaningFrequency = "Bi-weekly";
+export const CleaningFrequencyThreeTimes: CleaningFrequency = "3 times a month";
+export const CleaningFrequencyOnce: CleaningFrequency = "Once a month";
+export const CleaningFrequencyMoreThanFiveTimes: CleaningFrequency =
+  "More than 5 times a month";
+export const CleaningFrequencyLessThanFiveTimes: CleaningFrequency =
+  "Less than 5 times a month";
 
 // Header Menu
 export const MenuLinks: HeaderSearchLink[] = [
@@ -49,4 +60,3 @@ export const Months = {
   Nov: "November",
   Dec: "December",
 };
-

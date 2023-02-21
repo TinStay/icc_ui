@@ -7,16 +7,16 @@ import {
   useMantineTheme,
   MantineTheme,
   createStyles,
+  Tooltip,
   Title,
 } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons";
-import { IconSortAscending2 } from "@tabler/icons";
-import { IconUser } from "@tabler/icons";
 
 // Types
-import { Cleaning } from "@/types";
+import { Cleaning, CleaningType } from "@/types";
 
 import moment from "moment";
+import { getColorForType } from "@/helpers";
 
 const useStyles = createStyles((theme) => ({
   cleaningBoxPaper: {
@@ -37,10 +37,17 @@ const useStyles = createStyles((theme) => ({
 
 type Props = {
   cleaningInfo: Cleaning;
+  monthlyHours: number;
+  defaultCleaningTypes: CleaningType[];
   onShowDetails: () => void;
 };
 
-const CleaningBox = ({ cleaningInfo, onShowDetails }: Props) => {
+const CleaningBox = ({
+  cleaningInfo,
+  monthlyHours,
+  defaultCleaningTypes,
+  onShowDetails,
+}: Props) => {
   // Styles
   const theme: MantineTheme = useMantineTheme();
   const { classes } = useStyles();
@@ -50,6 +57,11 @@ const CleaningBox = ({ cleaningInfo, onShowDetails }: Props) => {
     " DD MMMM, dddd"
   );
   let cleaningHoursLabel: string = `${cleaningInfo.Time.From} - ${cleaningInfo.Time.To}`;
+
+  let cleaningTypes =
+    cleaningInfo?.CleaningTypes.length !== 0
+      ? cleaningInfo.CleaningTypes
+      : defaultCleaningTypes;
 
   return (
     <Paper
@@ -71,21 +83,30 @@ const CleaningBox = ({ cleaningInfo, onShowDetails }: Props) => {
         }}
       >
         {/* Cleaning Hours */}
-        <Title order={1} sx={{ color: "" }} >
-          5
+        <Title order={1} sx={{ color: "" }}>
+          {cleaningInfo.Hours}
         </Title>
-        <Title order={5}  >
-          /15
+        <Title fw={600} order={5}>
+          / {monthlyHours} h
         </Title>
       </Box>
 
       {/* Vertical divider */}
-      <Divider
+      {/* <Divider
         size="md"
         orientation="vertical"
-        color={theme.colors.indigo[5]}
+        color={`${theme.fn.gradient({ from: "red", to: "orange" })}`}
         sx={{ margin: "0 15px", flexGrow: 0 }}
-      />
+      /> */}
+      <Box
+        sx={{
+          height: "69px",
+          width: "3px",
+          borderRadius: "5px",
+          backgroundColor: theme.colors.primaryBlue,
+          margin: "0 15px",
+        }}
+      ></Box>
 
       <Box sx={{ flexGrow: 0, width: "200px" }}>
         <Box
@@ -112,11 +133,25 @@ const CleaningBox = ({ cleaningInfo, onShowDetails }: Props) => {
             marginTop: "3px",
           }}
         >
-          <IconSortAscending2 />
-          <Text fz="sm" sx={{ marginLeft: "3px" }}>
-            {" "}
-            Bathroom & Kitchen
-          </Text>
+          {/* Cleaning types */}
+          {cleaningTypes &&
+            cleaningTypes.map((type) => (
+              <Tooltip
+                transition="pop-top-right"
+                label={type}
+                color={getColorForType(type)}
+              >
+                <Box
+                  sx={{
+                    margin: "2px",
+                    borderRadius: "20px",
+                    width: "20px",
+                    height: "10px",
+                    backgroundColor: theme.colors[getColorForType(type)][6],
+                  }}
+                ></Box>
+              </Tooltip>
+            ))}
         </Box>
       </Box>
 

@@ -12,7 +12,7 @@ import SubscriptionDetails from "@/elements/cleanings/subscriptions/Subscription
 import CustomizedPaper from "@/elements/general/CustomizedPaper";
 // Mantine
 import {
-  Paper,
+  Tooltip,
   Text,
   Title,
   Box,
@@ -22,6 +22,8 @@ import {
   Collapse,
   Space,
 } from "@mantine/core";
+import { IconSortAscending2 } from "@tabler/icons";
+
 import { useMediaQuery } from "@mantine/hooks";
 import { IconUsers, IconRotateRectangle } from "@tabler/icons";
 
@@ -51,9 +53,13 @@ const useStyles = createStyles((theme) => ({
 
 type Props = {
   subscriptionData: Subscription;
+  showCleaningDetails: (cleaning, subscription) => void;
 };
 
-const SubscriptionCleaningBox = ({ subscriptionData }: Props) => {
+const SubscriptionCleaningBox = ({
+  subscriptionData,
+  showCleaningDetails,
+}: Props) => {
   const [showDetails, setShowDetails] = useState(false);
 
   const theme: MantineTheme = useMantineTheme();
@@ -107,28 +113,31 @@ const SubscriptionCleaningBox = ({ subscriptionData }: Props) => {
               types={subscriptionData?.AllCleaningTypes}
             />
           </Box>
+
           <Box sx={{ display: "flex", marginTop: theme.spacing.xs }}>
+            {/* Frequency */}
             {isDesktopView && (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginRight: theme.spacing.xl,
-                }}
-              >
-                <IconRotateRectangle />
-                <Text fz="md" ml={5}>
-                  bi-weekly
-                </Text>
-              </Box>
+              <IconAndText
+                icon={<IconRotateRectangle />}
+                text={subscriptionData?.CleaningFrequency}
+                tooltipText="Cleaning frequency"
+              />
             )}
+
+            {/* Priority */}
+            <IconAndText
+              icon={<IconSortAscending2 />}
+              text={subscriptionData?.DefaultPriority}
+              tooltipText="Cleaning priority"
+            />
+
+            {/* Cleaners */}
             {isDesktopView && (
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <IconUsers />
-                <Text fz="md" ml={5}>
-                  2 cleaners
-                </Text>
-              </Box>
+              <IconAndText
+                icon={<IconUsers />}
+                text={subscriptionData?.Cleaners.length}
+                tooltipText="Number of cleaners"
+              />
             )}
           </Box>
         </Box>
@@ -136,10 +145,36 @@ const SubscriptionCleaningBox = ({ subscriptionData }: Props) => {
 
       {/* Detailed information */}
       <Collapse in={showDetails}>
-        <SubscriptionDetails subscription={subscriptionData} />
+        <SubscriptionDetails
+          subscription={subscriptionData}
+          showCleaningDetails={(cleaning) =>
+            showCleaningDetails(cleaning, subscriptionData)
+          }
+        />
       </Collapse>
     </CustomizedPaper>
   );
 };
 
 export default SubscriptionCleaningBox;
+
+const IconAndText = ({ icon, text, tooltipText }) => {
+  const theme: MantineTheme = useMantineTheme();
+  return (
+    <Tooltip label={tooltipText} color={theme.colors.primaryBlue[0]} position="bottom" withArrow>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          marginRight: "15px",
+          color: theme.colors.primaryBlue,
+        }}
+      >
+        {icon}
+        <Text fz="md" ml={5} sx={{ color: theme.colors.darkBlueText }}>
+          {text}
+        </Text>
+      </Box>
+    </Tooltip>
+  );
+};
