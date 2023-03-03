@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Box,
   Paper,
@@ -11,12 +11,13 @@ import {
   Title,
 } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons";
-
+import { UtilitiesContext } from "@/contexts";
 // Types
 import { Cleaning, CleaningType } from "@/types";
 
 import moment from "moment";
 import { getColorForType } from "@/helpers";
+import CleaningStatusChip from "../general/CleaningStatusChip";
 
 const useStyles = createStyles((theme) => ({
   cleaningBoxPaper: {
@@ -51,6 +52,7 @@ const CleaningBox = ({
   // Styles
   const theme: MantineTheme = useMantineTheme();
   const { classes } = useStyles();
+  const { isDesktopView } = useContext(UtilitiesContext);
 
   // Label values
   let cleaningDate: string = moment(cleaningInfo.Date.toDate()).format(
@@ -76,82 +78,73 @@ const CleaningBox = ({
       <Box
         sx={{
           display: "flex",
-          alignItems: "end",
-          textAlign: "center",
+          alignItems: "center",
           flexGrow: 0,
-          padding: "0 8px",
+          width: "90px",
         }}
       >
-        {/* Cleaning Hours */}
-        <Title order={1} sx={{ color: "" }}>
-          {cleaningInfo.Hours}
-        </Title>
-        <Title fw={600} order={5}>
-          / {monthlyHours} h
-        </Title>
-      </Box>
-
-      {/* Vertical divider */}
-      {/* <Divider
-        size="md"
-        orientation="vertical"
-        color={`${theme.fn.gradient({ from: "red", to: "orange" })}`}
-        sx={{ margin: "0 15px", flexGrow: 0 }}
-      /> */}
-      <Box
-        sx={{
-          height: "69px",
-          width: "3px",
-          borderRadius: "5px",
-          backgroundColor: theme.colors.primaryBlue,
-          margin: "0 15px",
-        }}
-      ></Box>
-
-      <Box sx={{ flexGrow: 0, width: "200px" }}>
         <Box
           sx={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            alignItems: "end",
+            textAlign: "center",
+            flexGrow: 0,
+            padding: "0 8px",
           }}
         >
-          {/* Date */}
-          <Text fw={700} mb="2px">
-            {cleaningDate}
-          </Text>
+          {/* Cleaning Hours */}
+          <Title order={1} mr={4}>
+            {cleaningInfo.Hours}
+          </Title>
+          <Title fw={600} order={3} sx={{ marginBottom: "1px" }}>
+            h
+          </Title>
         </Box>
-        {/* Time */}
-        <Text fz="sm" c="dimmed" mb="5px">
-          {cleaningHoursLabel}
-        </Text>
+
+        {/* Vertical divider */}
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: " start",
-            marginTop: "3px",
+            height: "69px",
+            width: "3px",
+            borderRadius: "5px",
+            backgroundColor: theme.colors.primaryBlue,
+            margin: "0 15px",
+            flexGrow: 0,
           }}
-        >
-          {/* Cleaning types */}
-          {cleaningTypes &&
-            cleaningTypes.map((type) => (
-              <Tooltip
-                transition="pop-top-right"
-                label={type}
-                color={getColorForType(type)}
-              >
-                <Box
-                  sx={{
-                    margin: "2px",
-                    borderRadius: "20px",
-                    width: "20px",
-                    height: "10px",
-                    backgroundColor: theme.colors[getColorForType(type)][6],
-                  }}
-                ></Box>
-              </Tooltip>
-            ))}
+        ></Box>
+      </Box>
+      <Box sx={{ flexGrow: 1, display: isDesktopView ? "flex" : "block", alignItems: "center",justifyContent: "space-between", }}>
+        <Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            {/* Date */}
+            <Text fw={700} mb="2px">
+              {cleaningDate}
+            </Text>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: " start",
+              marginTop: "3px",
+            }}
+          >
+            {/* Time */}
+            <Text fz="sm" c="dimmed">
+              {cleaningHoursLabel}
+            </Text>
+          </Box>
+        </Box>
+        <Box>
+          {/* Cleaning status */}
+          <CleaningStatusChip status={cleaningInfo?.Status} />
         </Box>
       </Box>
 
@@ -162,5 +155,27 @@ const CleaningBox = ({
     </Paper>
   );
 };
+
+
+ {/* Cleaning types */}
+//  {cleaningTypes &&
+//   cleaningTypes.map((type) => (
+//     <Tooltip
+//       transition="pop-top-right"
+//       label={type}
+//       withArrow
+//       color={getColorForType(type)}
+//     >
+//       <Box
+//         sx={{
+//           margin: "2px",
+//           borderRadius: "20px",
+//           width: "20px",
+//           height: "10px",
+//           backgroundColor: theme.colors[getColorForType(type)][6],
+//         }}
+//       ></Box>
+//     </Tooltip>
+//   ))}
 
 export default CleaningBox;

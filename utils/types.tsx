@@ -1,3 +1,5 @@
+import firebase from "@/firebase-client";
+
 // Cleaning & Subscription
 export interface Subscription {
   ID: string;
@@ -12,7 +14,8 @@ export interface Subscription {
   DefaultCleaningTypes: CleaningType[];
   DefaultPriority: string;
   Notes: string;
-  Cleaners: Cleaner[] | [];
+  Cleaners: User[] | [];
+  Managers: User[] | [];
   Users: string[];
   ActivationCode: string;
 }
@@ -40,7 +43,8 @@ export interface Cleaning {
   CleaningTypes: CleaningType[];
   Notes: string;
   Priority: string;
-  Cleaners: Cleaner[] | [];
+  Cleaners: User[] | [];
+  Managers: User[] | [];
 }
 
 export interface JobAddress {
@@ -52,12 +56,28 @@ export interface JobAddress {
   Addition?: string;
 }
 
-export interface Cleaner {
-  ID: string;
+export interface User {
+  UID: string;
+  Registered: firebase.firestore.Timestamp;
+  LastUpdated: firebase.firestore.Timestamp;
   FirstName: string;
   LastName: string;
+  Email: string;
   ImageURL: string;
   PhoneNumber: string;
+  Role: UserRole;
+}
+
+export type UserRole =
+  | "User"
+  | "Cleaner"
+  | "Manager"
+  | "Driver"
+  | "Admin"
+  | "Super admin";
+
+export interface Roles {
+  [Role: string]: UserRole;
 }
 
 export type CleaningType =
@@ -71,7 +91,15 @@ export type CleaningType =
   | "Carpet cleaning"
   | "Deep cleaning";
 
+  export interface CleaningTypeList {
+    [Type: string]: CleaningType;
+  }
+
 export type SubscriptionType = "Starter" | "Standard" | "Deluxe" | "Custom";
+
+export interface SubscriptionTypeList {
+  [Type: string]: SubscriptionType;
+}
 
 export type CleaningFrequency =
   | "Weekly"
@@ -79,9 +107,17 @@ export type CleaningFrequency =
   | "3 times a month"
   | "Once a month"
   | "More than 5 times a month"
-  | "Less than 5 times a month"
+  | "Less than 5 times a month";
+
+  export interface CleaningFrequencyList {
+    [Frequency: string]: CleaningFrequency;
+  }
 
 export type CleaningStatus = "Finished" | "Ongoing" | "Upcoming";
+
+export interface CleaningStatusList {
+  [Status: string]: CleaningStatus;
+}
 
 export type Month =
   | "January"
@@ -109,4 +145,7 @@ export interface HeaderSearchLink {
   link: string;
   label: string;
   links?: { link: string; label: string }[];
+}
+export interface NotificationVariantList {
+  [type: string]: string;
 }

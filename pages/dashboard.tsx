@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { getAllUserSubscriptions } from "../utils/firebase/firestore/functions";
-import { CurrentUser, getCurrentUser } from "@/firebase/auth/variables";
 
 // Context
-import { ConnectedUserContext } from "@/contexts";
+import { ConnectedUserContext, UtilitiesContext } from "@/contexts";
 
 // Next
 import { NextPage } from "next";
@@ -30,7 +29,6 @@ import {
   Loader as MantineLoader,
   Skeleton,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
 
 import { GetBackgroundColorForTheme } from "@/helpers";
 import { IconPlus } from "@tabler/icons";
@@ -72,7 +70,10 @@ const Dashboard: NextPage<Props> = (props) => {
   const getSubscriptions = async () => {
     if (connectedUser) {
       setLoading(true);
-      let documents = await getAllUserSubscriptions(connectedUser.uid);
+      
+      let documents = [];
+      if (connectedUser.UID)
+        documents = await getAllUserSubscriptions(connectedUser.UID);
 
       setSubscriptions(documents);
       setLoading(false);
@@ -84,9 +85,7 @@ const Dashboard: NextPage<Props> = (props) => {
     getSubscriptions();
   }, [connectedUser]);
 
-  const isDesktopView: boolean = useMediaQuery(
-    `(min-width: ${theme.breakpoints.xs}px)`
-  );
+  const { isDesktopView } = useContext(UtilitiesContext);
 
   return (
     <Box

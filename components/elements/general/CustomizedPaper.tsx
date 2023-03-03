@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
   Paper,
   useMantineTheme,
   MantineTheme,
   createStyles,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { UtilitiesContext } from "@/contexts";
 
 const useStyles = createStyles((theme) => ({
   calendarPaper: {
@@ -23,13 +23,13 @@ const CustomizedPaper = ({ children, ...props }) => {
   const theme: MantineTheme = useMantineTheme();
   const { classes } = useStyles();
 
-  const isDesktopView: boolean = useMediaQuery(
-    `(min-width: ${theme.breakpoints.xs}px)`
-  );
+
+  const { isDesktopView } = useContext(UtilitiesContext);
+
   return (
     <Paper
       radius="xl"
-      p={isDesktopView ? "xl" : "sm"}
+      p={isDesktopView ? "lg" : "sm"}
       withBorder
       className={classes.calendarPaper}
       {...props}

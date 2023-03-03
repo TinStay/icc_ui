@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext} from "react";
 
 // Helpers & Variables
 import { Subscription } from "@/types";
@@ -16,6 +16,7 @@ import {
   Text,
   Title,
   Box,
+  Flex,
   createStyles,
   useMantineTheme,
   MantineTheme,
@@ -23,8 +24,8 @@ import {
   Space,
 } from "@mantine/core";
 import { IconSortAscending2 } from "@tabler/icons";
+import { UtilitiesContext } from "@/contexts";
 
-import { useMediaQuery } from "@mantine/hooks";
 import { IconUsers, IconRotateRectangle } from "@tabler/icons";
 
 const useStyles = createStyles((theme) => ({
@@ -64,9 +65,8 @@ const SubscriptionCleaningBox = ({
 
   const theme: MantineTheme = useMantineTheme();
 
-  const isDesktopView: boolean = useMediaQuery(
-    `(min-width: ${theme.breakpoints.xs}px)`
-  );
+  const { isDesktopView } = useContext(UtilitiesContext);
+
 
   // Formatted address to display
   let address: string = GetAddressString(subscriptionData?.Address);
@@ -84,7 +84,9 @@ const SubscriptionCleaningBox = ({
     >
       {/* Cleaning badge for subscription type */}
       <Box className={classes.subscriptionTypeBadgeContainer}>
-        <SubscriptionTypeBadge type={subscriptionData?.SubscriptionType} />
+        {/*//! update when tested */}
+        {/* <SubscriptionTypeBadge type={subscriptionData?.SubscriptionType} /> */}
+        <SubscriptionTypeBadge type={"Custom"} />
       </Box>
 
       {/* Main information */}
@@ -114,15 +116,20 @@ const SubscriptionCleaningBox = ({
             />
           </Box>
 
-          <Box sx={{ display: "flex", marginTop: theme.spacing.xs }}>
+          <Flex
+           gap="md"
+           direction={isDesktopView ? "row" : "column"}
+           p={isDesktopView ? "0" : "md"}
+            sx={{
+              marginTop: theme.spacing.sm,
+            }}
+          >
             {/* Frequency */}
-            {isDesktopView && (
-              <IconAndText
-                icon={<IconRotateRectangle />}
-                text={subscriptionData?.CleaningFrequency}
-                tooltipText="Cleaning frequency"
-              />
-            )}
+            <IconAndText
+              icon={<IconRotateRectangle />}
+              text={subscriptionData?.CleaningFrequency}
+              tooltipText="Cleaning frequency"
+            />
 
             {/* Priority */}
             <IconAndText
@@ -132,14 +139,12 @@ const SubscriptionCleaningBox = ({
             />
 
             {/* Cleaners */}
-            {isDesktopView && (
-              <IconAndText
-                icon={<IconUsers />}
-                text={subscriptionData?.Cleaners.length}
-                tooltipText="Number of cleaners"
-              />
-            )}
-          </Box>
+            <IconAndText
+              icon={<IconUsers />}
+              text={subscriptionData?.Cleaners.length}
+              tooltipText="Number of cleaners"
+            />
+          </Flex>
         </Box>
       </Box>
 
@@ -161,7 +166,12 @@ export default SubscriptionCleaningBox;
 const IconAndText = ({ icon, text, tooltipText }) => {
   const theme: MantineTheme = useMantineTheme();
   return (
-    <Tooltip label={tooltipText} color={theme.colors.primaryBlue[0]} position="bottom" withArrow>
+    <Tooltip
+      label={tooltipText}
+      color={theme.colors.primaryBlue[0]}
+      position="bottom"
+      withArrow
+    >
       <Box
         sx={{
           display: "flex",

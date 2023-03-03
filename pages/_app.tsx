@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/globals.css";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import initAuth from "../utils/firebase/auth/initAuth";
-import { CurrentUser, getCurrentUser } from "@/firebase/auth/variables";
+import { getCurrentUser } from "@/firebase/auth/helpers";
 
 // Mantine
 import {
@@ -11,28 +11,51 @@ import {
   MantineThemeOverride,
   ColorSchemeProvider,
   ColorScheme,
-  MantineColor,
+  MantineTheme,
+  useMantineTheme,
 } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { NotificationsProvider } from "@mantine/notifications";
-import React from "react";
 
 // Context
-import { ConnectedUserContext } from "@/contexts";
+import { ConnectedUserContext, UtilitiesContext } from "@/contexts";
+import { storage } from "@/firebase/storage/reference";
 
 initAuth();
 
 function MyApp({ Component, pageProps }: AppProps) {
   // Dark and Light mode
-  const [connectedUser, setConnectedUser] = useState({ uid: "" });
+  const [connectedUser, setConnectedUser] = useState({ UID: "" });
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+
+  storage
+    .ref("/account-images/zoltanImg.png")
+    .getDownloadURL()
+    .then((url) => {
+      // `url` is the download URL for 'images/stars.jpg'
+
+      // This can be downloaded directly:
+      // var xhr = new XMLHttpRequest();
+      // xhr.responseType = 'blob';
+      // xhr.onload = (event) => {
+      //   var blob = xhr.response;
+      // };
+      // xhr.open('GET', url);
+      // xhr.send();
+      // "https://firebasestorage.googleapis.com/v0/b/icc-realm-dev.appspot.com/o/account-images%2Ftinstay.jpg?alt=media&token=37ef4613-5804-4a03-91cc-37f03f442930"
+      return url;
+    })
+    .catch((error) => {
+      // Handle any errors
+      return error;
+    });
 
   const appTheme: MantineThemeOverride = {
     colorScheme: colorScheme,
     fontFamily: "'Madani-Regular', sans-serif",
     black: "#10316D",
-    primaryShade: 6,
     colors: {
       // Add your color
       backgroundWhite: ["#F8F9FA"],
@@ -56,11 +79,15 @@ function MyApp({ Component, pageProps }: AppProps) {
       },
       Divider: {
         defaultProps: {
-          color: "#eeeeee",
         },
       },
     },
   };
+
+  const theme: MantineTheme = useMantineTheme();
+  const isDesktopView: boolean = useMediaQuery(
+    `(min-width: ${theme.breakpoints.xs}px)`
+  );
 
   useEffect(() => {
     updateCurrentUserState();
@@ -93,25 +120,16 @@ function MyApp({ Component, pageProps }: AppProps) {
           value={{ connectedUser, setConnectedUser }}
         >
           <MantineProvider theme={appTheme} withGlobalStyles withNormalizeCSS>
-            <NotificationsProvider>
-              <Component {...pageProps} />
-            </NotificationsProvider>
+            <UtilitiesContext.Provider value={{ isDesktopView }}>
+              <NotificationsProvider>
+                <Component {...pageProps} />
+              </NotificationsProvider>
+            </UtilitiesContext.Provider>
           </MantineProvider>
         </ConnectedUserContext.Provider>
       </ColorSchemeProvider>
     </div>
   );
 }
-
-// MyApp.getInitialProps = async (appContext) => {
-//   // calls page's `getInitialProps` and fills `appProps.pageProps`
-//   // const appProps = await App.getInitialProps(appContext);
-//   const AuthUser = await getCurrentUser();
-//   console.log("AuthUser");
-
-//   // const headerData = ....
-
-//   return { props: AuthUser };
-// };
 
 export default MyApp;

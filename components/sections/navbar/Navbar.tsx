@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 // Components
 import Logo from "@/elements/general/logo/LogoWithoutText";
 
@@ -18,12 +18,11 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
-
 // Types & Constants
-import { HeaderSearchProps } from "@/types";
 import { MenuLinks } from "@/constants";
+import UserMenu from "./components/UserMenu";
 
-const HEADER_HEIGHT = 70;
+const HEADER_HEIGHT = 74;
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -106,8 +105,8 @@ const HeaderMenu: React.FC = () => {
   const [opened, { toggle, close }] = useDisclosure(false);
   const { classes, cx } = useStyles();
 
-  // Ruoter 
-  const router = useRouter()
+  // Ruoter
+  const router = useRouter();
 
   // Menu items
   const items = MenuLinks.map((link) => (
@@ -130,10 +129,14 @@ const HeaderMenu: React.FC = () => {
     <Header height={HEADER_HEIGHT} mb={20} className={classes.header}>
       <Container>
         <div className={classes.inner}>
-          <Logo width="50px"  />
-          <Group spacing={5} className={classes.links}>
-            {items}
-          </Group>
+          <Logo width="50px" />
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Group spacing={5} className={classes.links}>
+              {items}
+            </Group>
+            {/* Dropdown user menu */}
+            <UserMenu />
+          </Box>
           <Burger
             opened={opened}
             onClick={toggle}

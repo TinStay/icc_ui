@@ -2,19 +2,19 @@ import firebase from "@/firebase-client";
 import "firebase/firestore";
 import { docRef, user, now } from "@/FS-client-refs";
 import { Subscription } from "@/types";
-import { getCurrentUser } from "../auth/variables";
+import { getCurrentUser } from "../auth/helpers";
 import { dummySubscriptionData } from "../../dummyData"; 
 const db = firebase.firestore(); // mostly for transactions or batches
 const subscriptionsRef = db.collection("subscriptions");
 
 // functions accessed from components
 
-export const getAllUserSubscriptions = async (uid) => {
+export const getAllUserSubscriptions = async (UID) => {
   let subscriptions = [];
 
   // Fetch documents
   await subscriptionsRef
-    .where("Users", "array-contains", uid)
+    .where("Users", "array-contains", UID)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -49,8 +49,8 @@ export const getAllDocs = async (params) => {
 
 // saved registered user;s in user's collection
 // check FirebaseAuth.js for this function
-export const registerUser = async (uid) => {
-  await user(uid).set({ uid: uid, registered: now });
+export const registerUser = async (UID, userData) => {
+  await user(UID).set(userData);
 };
 
 export const SetSubscriptionDocument = (
@@ -68,7 +68,7 @@ export const SetSubscriptionDocument = (
     });
 };
 
-export const ActivateSubscription = (code: number) => {
+export const ActivateSubscription = async (code: number) => {
   return new Promise((resolve, reject) => {
     subscriptionsRef
       .where("ActivationCode", "==", `${code}`)
@@ -90,7 +90,7 @@ export const ActivateSubscription = (code: number) => {
         await getCurrentUser().then((user: any) => {
           // Add user to "Users" array in subscription
           subscriptionsRef.doc(targetSub.ID).update({
-            Users: [...targetSub.Users, user.uid],
+            Users: [...targetSub.Users, user.UID],
           }).catch(err => reject(new Error(`Failed to add subscription: ${err}`)))
         });
 

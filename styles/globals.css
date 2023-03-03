@@ -13,3 +13,31 @@ body{
   padding: 0;
   box-sizing: border-box;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  transition: all ease-in 2s;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 20px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c9c9c9;
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #c1c1c1;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+

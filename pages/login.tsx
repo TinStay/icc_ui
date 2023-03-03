@@ -1,6 +1,7 @@
-import React from "react";
-import FirebaseAuth from "@/elements/FirebaseAuth";
+import React, { useState } from "react";
+import FirebaseAuth from "@/elements/general/auth/FirebaseAuth";
 import { AuthAction, withAuthUser } from "next-firebase-auth";
+import { useForm } from "@mantine/form";
 
 // Mantine
 import {
@@ -8,20 +9,21 @@ import {
   createStyles,
   TextInput,
   PasswordInput,
-  Checkbox,
+  Box,
   Button,
   Title,
   Text,
   Anchor,
-  Group,
+  Loader,
   Divider,
 } from "@mantine/core";
+import { createAccountWithEmailAndPassword, loginWithEmailAndPassword } from "@/firebase/auth/helpers";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: "100vh",
     backgroundSize: "cover",
-    backgroundImage: 'url("/window_cleaning.jpg")'
+    backgroundImage: 'url("/window_cleaning.jpg")',
   },
 
   form: {
@@ -52,7 +54,56 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const AuthenticationImage = () => {
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { classes } = useStyles();
+
+  const form = useForm({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      email: "",
+      password: "",
+    },
+
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+    },
+  });
+
+  const toggleSignUpForm = (e) => {
+    e.preventDefault();
+    // Reset form values
+    form.onReset(e);
+    // Change form UI
+    setIsSignUp(!isSignUp);
+  };
+
+  const onCreateAccountWithEmailAndPassword = async () => {
+    setLoading(true);
+
+    // Validate
+    form.validate();
+
+    // Register in Firebase Authentication and save user data to Firestore
+    await createAccountWithEmailAndPassword(form.values);
+
+    setLoading(false);
+  };
+
+  const onLoginWithEmailAndPassword = async () => {
+    setLoading(true);
+
+    // Validate
+    form.validate();
+
+    // Login to Firebase Authentication
+    await loginWithEmailAndPassword(form.values.email, form.values.password);
+
+    setLoading(false);
+  };
+
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
@@ -63,7 +114,7 @@ const AuthenticationImage = () => {
           mt="md"
           mb={50}
         >
-          Welcome back to ICC Realm
+          {isSignUp ? "Welcome to ICC Realm" : "Welcome back to ICC Realm"}
         </Title>
 
         {/* Social media loin */}
@@ -75,30 +126,89 @@ const AuthenticationImage = () => {
           my="lg"
         />
 
-        <TextInput
-          label="Email address"
-          placeholder="hello@gmail.com"
-          size="md"
-        />
-        <PasswordInput
-          label="Password"
-          placeholder="Your password"
-          mt="md"
-          size="md"
-        />
-        <Checkbox label="Keep me logged in" mt="xl" size="md" />
-        <Button fullWidth mt="xl" size="md">
-          Login
-        </Button>
+        <form onReset={form.onReset}>
+          {isSignUp ? (
+            //  Sign up
+            <Box>
+              {" "}
+              <TextInput
+                label="First name"
+                placeholder="John"
+                size="md"
+                {...form.getInputProps("firstName")}
+              />
+              <TextInput
+                label="Last name"
+                placeholder="Daniels"
+                mt="md"
+                size="md"
+                {...form.getInputProps("lastName")}
+              />
+              <TextInput
+                label="Email address"
+                placeholder="hello@gmail.com"
+                mt="md"
+                size="md"
+                {...form.getInputProps("email")}
+              />
+              <TextInput
+                label="Phone number"
+                placeholder="123456789"
+                mt="md"
+                size="md"
+                {...form.getInputProps("phoneNumber")}
+              />
+              <PasswordInput
+                label="Password"
+                placeholder="Your password"
+                mt="md"
+                size="md"
+                {...form.getInputProps("password")}
+              />
+            </Box>
+          ) : (
+            //  Login
+            <Box>
+              <TextInput
+                label="Email address"
+                placeholder="hello@gmail.com"
+                size="md"
+                {...form.getInputProps("email")}
+              />
+              <PasswordInput
+                label="Password"
+                placeholder="Your password"
+                mt="md"
+                size="md"
+                {...form.getInputProps("password")}
+              />
+            </Box>
+          )}
+
+          {/* <Checkbox label="Keep me logged in" mt="xl" size="md" /> */}
+          <Button
+            fullWidth
+            mt="xl"
+            size="md"
+            disabled={loading}
+            onClick={() =>
+              isSignUp
+                ? onCreateAccountWithEmailAndPassword()
+                : onLoginWithEmailAndPassword()
+            }
+          >
+            {loading ? <Loader/> : isSignUp ? "Sign up" : "Log in"}
+          </Button>
+        </form>
 
         <Text align="center" mt="md">
-          Don't have an account?{" "}
+          {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
           <Anchor<"a">
             href="#"
             weight={700}
-            onClick={(event) => event.preventDefault()}
+            onClick={(e) => toggleSignUpForm(e)}
           >
-            Register
+            {isSignUp ? "Log in" : "Register"}
           </Anchor>
         </Text>
       </Paper>

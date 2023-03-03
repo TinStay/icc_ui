@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 
 // Mantine
 import {
@@ -6,9 +6,6 @@ import {
   useMantineTheme,
   MantineTheme,
   createStyles,
-  Title,
-  Drawer,
-  HoverCard,
 } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
 
@@ -21,12 +18,13 @@ import { useMediaQuery } from "@mantine/hooks";
 import CleaningDetails from "./CleaningDetails";
 import CustomizedPaper from "../../general/CustomizedPaper";
 
+import { UtilitiesContext } from "@/contexts";
+
 const useStyles = createStyles((theme) => ({
   subscriptionDetailsContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-
     [theme.fn.largerThan("xs")]: {
       justifyContent: "space-around",
       marginTop: theme.spacing.xl * 1.5,
@@ -53,9 +51,11 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.xl,
   },
   cleaningsListContainer: {
-    margin: "30px 0",
+    marginTop: "10px",
+    flexGrow: 1,
     [theme.fn.largerThan("sm")]: {
-      margin: "0 10px",
+      marginLeft: "30px",
+      marginTop: "0",
     },
   },
 }));
@@ -74,28 +74,25 @@ const getCleaningDatesPerYearAndMonth = (
 
 type Props = {
   subscription: Subscription;
-  showCleaningDetails: (cleaning) => void
+  showCleaningDetails: (cleaning) => void;
 };
 
 const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
   // State & Variables
   const [cleaningDates, setCleaningDates] = useState<Date[]>(
-    getCleaningDatesPerYearAndMonth(subscription, "2023", Months.Feb)
+    getCleaningDatesPerYearAndMonth(subscription, "2023", Months.FEB)
   );
-  
 
   const theme: MantineTheme = useMantineTheme();
 
   const { classes } = useStyles();
 
-  const isDesktopView: boolean = useMediaQuery(
-    `(min-width: ${theme.breakpoints.xs}px)`
-  );
+  const { isDesktopView } = useContext(UtilitiesContext);
 
   // Open specific cleaning details in a drawer
   const onShowCleaningDetails = (cleaning: Cleaning) => {
-    // Save target cleaning information and show details drawer 
-    showCleaningDetails(cleaning)
+    // Save target cleaning information and show details drawer
+    showCleaningDetails(cleaning);
   };
 
   // Style calendar days
@@ -160,39 +157,43 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
 
   const selectDateFromCalendar = (date: Date) => {
     // Find selected date amongst all cleanings
-    let cleaning = subscription.AllCleanings["2023"][Months.Feb].find(
+    let cleaning = subscription.AllCleanings["2023"][Months.FEB].find(
       (cl) =>
         cl.Date.toDate().toLocaleDateString() === date.toLocaleDateString()
     );
     // Open cleaning details on date clicked
-    showCleaningDetails(cleaning)
+    showCleaningDetails(cleaning);
   };
 
   return (
-    <Box my={theme.spacing.xl} className={classes.subscriptionDetailsContainer}>
-      {/* Calendar */}
-      <CustomizedPaper>
-        <Calendar
-          multiple
-          value={cleaningDates}
-          onChange={() => {}}
-          // onChange={date => console.log('object :>> ', date)}
-          // onDayMouseEnter={date => console.log(date)}
-          size={isDesktopView ? "md" : "sm"}
-          preventFocus
-          classNames={{
-            calendarBase: classes.calendar,
-            day: classes.calendarDay,
-          }}
-          dayStyle={(date) => getStyleForDate(date)}
-          renderDay={(date) => getDayWithHoverCard(date)}
-        />
-      </CustomizedPaper>
-
+    <Box
+      my={isDesktopView ? theme.spacing.xl : theme.spacing.sm}
+      className={classes.subscriptionDetailsContainer}
+    >
+      <Box sx={{ flexGrow: 0, height: "100%" }}>
+        {/* Calendar */}
+        <CustomizedPaper >
+          <Calendar
+            multiple
+            value={cleaningDates}
+            onChange={() => {}}
+            // onChange={date => console.log('object :>> ', date)}
+            // onDayMouseEnter={date => console.log(date)}
+            size={isDesktopView ? "md" : "sm"}
+            preventFocus
+            classNames={{
+              calendarBase: classes.calendar,
+              day: classes.calendarDay,
+            }}
+            dayStyle={(date) => getStyleForDate(date)}
+            renderDay={(date) => getDayWithHoverCard(date)}
+          />
+        </CustomizedPaper>
+      </Box>
       {/* Cleanings list */}
       <Box className={classes.cleaningsListContainer}>
         {subscription &&
-          subscription.AllCleanings["2023"][Months.Feb]?.map((cleaning) => (
+          subscription.AllCleanings["2023"][Months.FEB]?.map((cleaning) => (
             <CleaningBox
               key={cleaning.ID}
               cleaningInfo={cleaning}
@@ -202,8 +203,6 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
             />
           ))}
       </Box>
-
-      
     </Box>
   );
 };

@@ -7,10 +7,10 @@ import {
   MantineTheme,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { showNotification } from "@mantine/notifications";
-import { IconX } from "@tabler/icons";
+import { showNotification } from "@/helpers";
 
 import { ActivateSubscription } from "@/firebase/firestore/functions";
+import { NotificationVariants } from "@/constants";
 
 function EnterCleaningCodeModal({ opened, onSuccess, onClose, ...props }) {
   const theme: MantineTheme = useMantineTheme();
@@ -31,33 +31,23 @@ function EnterCleaningCodeModal({ opened, onSuccess, onClose, ...props }) {
 
   const submitCode = async () => {
     // Get all subcriptions and check them for id
-
     await ActivateSubscription(+form.values.cleaningCode)
       .then((msg: any) => {
         showNotification({
-          id: "valid-code",
-          disallowClose: false,
           title: msg,
           message: "You can go ahead and check it out",
-          color: "green",
-          radius: "xl",
-          icon: <IconX />,
-          loading: false,
+          variant: NotificationVariants.SUCCESS,
         });
-        onSuccess()
+        setTimeout(() => {
+          onSuccess();
+        }, 200);
       })
       .catch((err) =>
-        // Return error if not found
         showNotification({
-          id: "invalid-code",
-          disallowClose: false,
           title: err.message,
           message:
             "Please ensure that you have entered it correctly and try again.",
-          color: "red",
-          radius: "xl",
-          icon: <IconX />,
-          loading: false,
+          variant: NotificationVariants.DANGER,
         })
       );
 

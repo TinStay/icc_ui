@@ -1,4 +1,12 @@
-import { HeaderSearchLink, CleaningStatus, CleaningFrequency } from "./types";
+import {
+  HeaderSearchLink,
+  CleaningFrequencyList,
+  CleaningTypeList,
+  Roles,
+  CleaningStatusList,
+  SubscriptionTypeList,
+  NotificationVariantList
+} from "./types";
 
 export const appVersion = "0.0.5";
 
@@ -9,7 +17,23 @@ export const FirestoreCollections = {
 };
 
 // App support for cleaning types
-export const CleaningTypes = {
+export const SubscriptionTypes: SubscriptionTypeList = {
+  STARTER: "Starter",
+  STANDARD: "Standard",
+  DELUXE: "Deluxe",
+  CUSTOM: "Custom",  
+};
+
+// Notification types
+export const NotificationVariants: NotificationVariantList = {
+  SUCCESS: "Success",
+  WARNING: "Warning",
+  DANGER: "Danger",
+  INFO: "Info",  
+};
+
+// App support for cleaning types
+export const CleaningTypes: CleaningTypeList = {
   HOUSEKEEPING: "Housekeeping",
   HOUSECLEANING: "House cleaning",
   WINDOWSCLEANING: "Windows cleaning",
@@ -19,20 +43,32 @@ export const CleaningTypes = {
   CARCLEANING: "Car cleaning",
 };
 
-// Cleaning status constants
-export const CleaningStatusUpcoming: CleaningStatus = "Upcoming";
-export const CleaningStatusOngoing: CleaningStatus = "Ongoing";
-export const CleaningStatusFinished: CleaningStatus = "Finished";
+// User roles constants
+export const UserRoles: Roles = {
+  USER: "User",
+  CLEANER: "Cleaner",
+  MANAGER: "Manager",
+  DRIVER: "Driver",
+  ADMIN: "Admin",
+  SUPERADMIN: "Super admin",
+};
 
-// Cleaning frequency constants
-export const CleaningFrequencyWeekly: CleaningFrequency = "Weekly";
-export const CleaningFrequencyBiWeekly: CleaningFrequency = "Bi-weekly";
-export const CleaningFrequencyThreeTimes: CleaningFrequency = "3 times a month";
-export const CleaningFrequencyOnce: CleaningFrequency = "Once a month";
-export const CleaningFrequencyMoreThanFiveTimes: CleaningFrequency =
-  "More than 5 times a month";
-export const CleaningFrequencyLessThanFiveTimes: CleaningFrequency =
-  "Less than 5 times a month";
+// Cleaning status constants
+export const CleaningStatuses: CleaningStatusList = {
+  UPCOMING: "Upcoming",
+  ONGOING: "Ongoing",
+  FINISHED: "Finished",
+};
+
+export const CleaningFrequencies: CleaningFrequencyList = {
+  WEEKLY: "Weekly",
+  BIWEEKLY: "Bi-weekly",
+  THREETIMES: "3 times a month",
+  ONCE: "Once a month",
+  MORETHANFIVETIMES: "More than 5 times a month",
+  LESSTHANFIVETIMES: "Less than 5 times a month",
+  
+};
 
 // Header Menu
 export const MenuLinks: HeaderSearchLink[] = [
@@ -40,23 +76,23 @@ export const MenuLinks: HeaderSearchLink[] = [
     link: "/dashboard",
     label: "Dashboard",
   },
-  {
-    link: "/account",
-    label: "Account",
-  },
 ];
+// {
+//   link: "/account",
+//   label: "Account",
+// },
 
 export const Months = {
-  Jan: "January",
-  Feb: "February",
-  Mar: "March",
-  Apr: "April",
-  May: "May",
-  Jun: "June",
-  Jul: "July",
-  Aug: "August",
-  Sep: "September",
-  Oct: "October",
-  Nov: "November",
-  Dec: "December",
+  JAN: "January",
+  FEB: "February",
+  MAR: "March",
+  APR: "April",
+  MAY: "May",
+  JUN: "June",
+  JUL: "July",
+  AUG: "August",
+  SEP: "September",
+  OCT: "October",
+  NOV: "November",
+  DEC: "December",
 };

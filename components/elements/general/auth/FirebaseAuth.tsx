@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-
 import firebase from "@/firebase-client";
 import "firebase/auth";
+import { now } from "@/firebase/firestore/references";
 import { registerUser } from "@/FS-client-functions";
+import { User } from "@/types";
+import { UserRoles } from "@/constants";
 
 // Note that next-firebase-auth inits Firebase for us,
 // so we don't need to.
@@ -21,7 +23,14 @@ const firebaseAuthConfig = {
         prompt: "select_account",
       },
     },
-    // firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    {
+      provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      customParameters: {
+        // Forces account selection even when one account
+        // is available.
+        prompt: "select_account",
+      },
+    },
   ],
   signInSuccessUrl: "/",
   credentialHelper: "none",
@@ -30,7 +39,23 @@ const firebaseAuthConfig = {
     signInSuccessWithAuthResult: (authResult) => {
       // remove this if you don't want to save in user's collection
       if (authResult.additionalUserInfo.isNewUser) {
-        registerUser(authResult.user.uid);
+        let userData: User = null;
+
+        // Construct base data for user
+        if (authResult.user) {
+          userData = {
+            UID: authResult.user.uid || "",
+            Registered: now,
+            LastUpdated: now,
+            ImageURL: authResult.user.photoURL || "",
+            Email: authResult.user.email || "",
+            FirstName: authResult.user.displayName.split(" ")[0] || "",
+            LastName: authResult.user.displayName.split(" ")[1] || "",
+            PhoneNumber: authResult.user.phoneNumber || "",
+            Role: UserRoles.USER,
+          };
+        }
+        registerUser(authResult.user.uid, userData);
       }
 
       // Don't automatically redirect. We handle redirecting based on

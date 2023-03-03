@@ -1,4 +1,5 @@
 import firebase from "firebase/app";
+import  "firebase/storage";
 
 const clientCredentials = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -12,5 +13,6 @@ const clientCredentials = {
 if (!firebase.apps.length) {
   firebase.initializeApp(clientCredentials);
 }
+
 
 export default firebase;

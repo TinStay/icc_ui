@@ -1,16 +1,15 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Box, Badge, Text, useMantineTheme, MantineTheme } from "@mantine/core";
 import { CleaningType } from "@/types";
 import { CleaningTypes } from "@/constants";
 import { useMediaQuery } from "@mantine/hooks";
 import { getColorForType } from "@/helpers";
+import { UtilitiesContext } from "@/contexts";
 
 const CleaningTypeChip = ({ type, readOnly }) => {
   const theme: MantineTheme = useMantineTheme();
 
-  const isDesktopView: boolean = useMediaQuery(
-    `(min-width: ${theme.breakpoints.xs}px)`
-  );
+  const { isDesktopView } = useContext(UtilitiesContext);
   return (
     <Badge
       color={getColorForType(type)}

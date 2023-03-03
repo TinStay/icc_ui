@@ -1,15 +1,17 @@
 import React from "react";
 import { Badge,  } from "@mantine/core";
+import { getGradientForSubscriptionType } from "@/helpers"; 
+import { SubscriptionType } from "@/types";
 
 interface Props {
-  type: string
+  type: SubscriptionType
 }
 
 const SubscriptionTypeBadge = ({ type }: Props) => {
   return (
     <Badge
     variant="gradient"
-    gradient={{ from: "blue", to: "cyan" }}
+    gradient={getGradientForSubscriptionType(type)}
     size="lg"
   >
     {type} Subscription
