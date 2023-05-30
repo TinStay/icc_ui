@@ -1,4 +1,4 @@
-import React, { useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 
 // Helpers & Variables
 import { Subscription } from "@/types";
@@ -42,6 +42,7 @@ const useStyles = createStyles((theme) => ({
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
+    
     },
   },
   subscriptionTypeBadgeContainer: {
@@ -67,12 +68,12 @@ const SubscriptionCleaningBox = ({
 
   const { isDesktopView } = useContext(UtilitiesContext);
 
-
   // Formatted address to display
   let address: string = GetAddressString(subscriptionData?.Address);
 
   const { classes } = useStyles();
 
+  console.log("isDesktopView", isDesktopView)
   return (
     <CustomizedPaper
       p={isDesktopView ? "xl" : "sm"}
@@ -80,13 +81,12 @@ const SubscriptionCleaningBox = ({
       shadow="lg"
       sx={{
         position: "relative",
+        // maxHeight: "600px",
       }}
     >
       {/* Cleaning badge for subscription type */}
       <Box className={classes.subscriptionTypeBadgeContainer}>
-        {/*//! update when tested */}
-        {/* <SubscriptionTypeBadge type={subscriptionData?.SubscriptionType} /> */}
-        <SubscriptionTypeBadge type={"Custom"} />
+        <SubscriptionTypeBadge type={subscriptionData?.SubscriptionType} />
       </Box>
 
       {/* Main information */}
@@ -117,9 +117,9 @@ const SubscriptionCleaningBox = ({
           </Box>
 
           <Flex
-           gap="md"
-           direction={isDesktopView ? "row" : "column"}
-           p={isDesktopView ? "0" : "md"}
+            gap="md"
+            direction={isDesktopView ? "row" : "column"}
+            p={isDesktopView ? "0" : "md"}
             sx={{
               marginTop: theme.spacing.sm,
             }}

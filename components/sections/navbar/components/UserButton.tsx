@@ -9,6 +9,8 @@ import {
 } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons";
 
+import Image from 'next/image'
+
 const useStyles = createStyles((theme) => ({
   user: {
     position: "relative",
@@ -47,7 +49,8 @@ export function UserButton({
   return (
     <UnstyledButton className={classes.user} {...others}>
       <Group>
-        <Avatar src={image} radius="xl" />
+        <Avatar src="/defaultUser.png" radius="xl" />
+        {/* //TODO: Add skeleton for loading user image */}
 
         <div style={{ flex: 1 }}>
           <Text size="sm" weight={500}>

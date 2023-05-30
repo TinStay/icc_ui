@@ -1,11 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, Button, Box, Text } from "@mantine/core";
 import { IconSettings, IconTrash } from "@tabler/icons";
 import { UserButton } from "./UserButton";
-import { onLogout } from "@/firebase/auth/helpers"; 
+import { getCurrentUser, onLogout } from "@/firebase/auth/helpers";
 
 const UserMenu = () => {
   const [opened, setOpened] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const getUser = async () => {
+    let user: any = await getCurrentUser();
+    setUser(user);
+  };
+
+  // Fetch user data 
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  // Display to user info
+  let userName = user ? `${user.FirstName} ${user.LastName}` : "Unknown User"
+  let userEmail = user ? `${user.Email}` : ""
+  let userImage = user ? `${user.ImageURL}` : "@/public/defaultUser.png"
+
   return (
     <Menu
       shadow="md"
@@ -18,9 +35,9 @@ const UserMenu = () => {
         <Box>
           {" "}
           <UserButton
-            image="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
-            name="Ann Nullpointer"
-            email="anullpointer@yahoo.com"
+            image={userImage}
+            name={userName}
+            email={userEmail}
             isOpen={opened}
           />
         </Box>

@@ -118,9 +118,9 @@ const Dashboard: NextPage<Props> = (props) => {
                 <CleaningsList subscriptions={subscriptions} />
               ) : (
                 // Show default message when there are no cleanings
-                <Paper shadow="xs" radius="xl" p="xl">
-                  <Center>
-                    <Text c="dimmed">You have no cleanings yet.</Text>
+                <Paper shadow="xs" radius="xl" p="xl" sx={{height:150}}>
+                  <Center h={100}>
+                    <Text c="dimmed">You have no cleanings yet</Text>
                   </Center>
                 </Paper>
               )}

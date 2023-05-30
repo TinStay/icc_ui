@@ -4,9 +4,12 @@ import {
   Drawer,
   Title,
   MantineTheme,
-  useMantineTheme,
   createStyles,
+  useMantineTheme
 } from "@mantine/core";
+
+
+
 
 import SubscriptionCleaningBox from "./SubscriptionCleaningBox";
 import CleaningDetails from "@/elements/cleanings/subscriptions/CleaningDetails";
@@ -69,7 +72,7 @@ const CleaningsList = ({ subscriptions }) => {
         overlayBlur={5}
         transition="slide-left"
         padding={isDesktopView ? "lg" : "sm"}
-        size="xl"
+        size="lg"
         classNames={{ body: classes.drawerBody }}
       >
         {/* Drawer content */}
@@ -83,3 +86,4 @@ const CleaningsList = ({ subscriptions }) => {
 };
 
 export default CleaningsList;
+

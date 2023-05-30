@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 
 // Mantine
 import {
@@ -12,25 +12,29 @@ import { Calendar } from "@mantine/dates";
 // Types
 import { Subscription, Cleaning } from "@/types";
 
-import { Months } from "@/constants";
 import CleaningBox from "./CleaningBox";
 import { useMediaQuery } from "@mantine/hooks";
 import CleaningDetails from "./CleaningDetails";
 import CustomizedPaper from "../../general/CustomizedPaper";
 
+// Helpers
 import { UtilitiesContext } from "@/contexts";
+import { getMonthAndYear } from "@/helpers";
+import { Months } from "@/constants";
 
 const useStyles = createStyles((theme) => ({
   subscriptionDetailsContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    
     [theme.fn.largerThan("xs")]: {
       justifyContent: "space-around",
       marginTop: theme.spacing.xl * 1.5,
     },
     [theme.fn.largerThan("sm")]: {
       flexDirection: "row",
+      
     },
   },
   calendarPaper: {
@@ -44,7 +48,7 @@ const useStyles = createStyles((theme) => ({
   },
   calendar: {
     margin: "0 auto",
-    [theme.fn.largerThan("sm")]: {},
+    // [theme.fn.largerThan("sm")]: {},
   },
   calendarDay: {
     margin: "0 1px",
@@ -53,7 +57,13 @@ const useStyles = createStyles((theme) => ({
   cleaningsListContainer: {
     marginTop: "10px",
     flexGrow: 1,
+    height: "390px", 
+    overflowY: "scroll", 
+    padding: "0 10px ",
+
     [theme.fn.largerThan("sm")]: {
+      height: "387px",
+      padding: "20px",
       marginLeft: "30px",
       marginTop: "0",
     },
@@ -66,7 +76,11 @@ const getCleaningDatesPerYearAndMonth = (
   month: string
 ) => {
   let cleanings = [];
-  subscriptionData.AllCleanings[year][month].forEach((cleaning) =>
+  console.log(
+    "subscriptionData.AllCleanings[year][month]",
+    subscriptionData.AllCleanings[year][month]
+  );
+  subscriptionData.AllCleanings[year][month]?.forEach((cleaning) =>
     cleanings.push(cleaning.Date.toDate())
   );
   return cleanings;
@@ -80,8 +94,10 @@ type Props = {
 const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
   // State & Variables
   const [cleaningDates, setCleaningDates] = useState<Date[]>(
-    getCleaningDatesPerYearAndMonth(subscription, "2023", Months.FEB)
+    getCleaningDatesPerYearAndMonth(subscription, "2023", Months.MAY)
   );
+
+  const { currentMonth, currentYear, nextMonth, nextYear } = getMonthAndYear();
 
   const theme: MantineTheme = useMantineTheme();
 
@@ -157,7 +173,7 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
 
   const selectDateFromCalendar = (date: Date) => {
     // Find selected date amongst all cleanings
-    let cleaning = subscription.AllCleanings["2023"][Months.FEB].find(
+    let cleaning = subscription.AllCleanings[currentYear][currentMonth].find(
       (cl) =>
         cl.Date.toDate().toLocaleDateString() === date.toLocaleDateString()
     );
@@ -165,17 +181,23 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
     showCleaningDetails(cleaning);
   };
 
+  const thisMonthCleanings = subscription.AllCleanings[currentYear]?.[currentMonth] || [];
+  const nextMonthCleanings = subscription.AllCleanings[nextYear]?.[nextMonth] || [];
+  const viewCleanings = [...thisMonthCleanings, ...nextMonthCleanings];
+  
+
+  console.log("cleaningDates", cleaningDates.map(date => new Date(date)))
   return (
     <Box
       my={isDesktopView ? theme.spacing.xl : theme.spacing.sm}
       className={classes.subscriptionDetailsContainer}
     >
-      <Box sx={{ flexGrow: 0, height: "100%" }}>
+      <Box sx={{ flexGrow: 0, height: "100%",  }}>
         {/* Calendar */}
-        <CustomizedPaper >
+        <CustomizedPaper>
           <Calendar
             multiple
-            value={cleaningDates}
+            value={cleaningDates && cleaningDates.map(date => new Date(date))}
             onChange={() => {}}
             // onChange={date => console.log('object :>> ', date)}
             // onDayMouseEnter={date => console.log(date)}
@@ -192,8 +214,8 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
       </Box>
       {/* Cleanings list */}
       <Box className={classes.cleaningsListContainer}>
-        {subscription &&
-          subscription.AllCleanings["2023"][Months.FEB]?.map((cleaning) => (
+        {viewCleanings &&
+          viewCleanings?.map((cleaning) => (
             <CleaningBox
               key={cleaning.ID}
               cleaningInfo={cleaning}
@@ -203,6 +225,18 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
             />
           ))}
       </Box>
+      {/* <Box className={classes.cleaningsListContainer}>
+        {viewCleanings &&
+          viewCleanings?.map((cleaning) => (
+            <CleaningBox
+              key={cleaning.ID}
+              cleaningInfo={cleaning}
+              monthlyHours={subscription.MonthlyHours}
+              defaultCleaningTypes={subscription.DefaultCleaningTypes}
+              onShowDetails={() => onShowCleaningDetails(cleaning)}
+            />
+          ))}
+      </Box> */}
     </Box>
   );
 };

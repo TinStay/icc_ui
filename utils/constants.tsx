@@ -17,6 +17,13 @@ export const FirestoreCollections = {
 };
 
 // App support for cleaning types
+export const SubscriptionAction = {
+  VIEW: "View",
+  EDIT: "Edit",
+  DELETE: "Delete",
+};
+
+// App support for cleaning types
 export const SubscriptionTypes: SubscriptionTypeList = {
   STARTER: "Starter",
   STANDARD: "Standard",

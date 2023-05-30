@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import moment from "moment";
 
 import {
@@ -10,7 +10,6 @@ import {
   MantineTheme,
   useMantineTheme,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
 
 import { GetAddressString } from "@/helpers";
 // Types
@@ -23,6 +22,7 @@ import CustomizedPaper from "@/elements/general/CustomizedPaper";
 import PersonInfoBox from "../general/PersonInfoBox";
 import CleaningStatusChip from "../general/CleaningStatusChip";
 import { UtilitiesContext } from "@/contexts";
+import Markdown from "@/elements/general/markdown/Markdown";
 
 const useStyles = createStyles((theme) => ({
   drawerContainer: {
@@ -137,7 +137,7 @@ const CleaningDetails = ({ cleaning, subscription }: Props) => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              marginTop: "10px"
+              marginTop: "10px",
             }}
           >
             {/* Date */}
@@ -153,7 +153,8 @@ const CleaningDetails = ({ cleaning, subscription }: Props) => {
           <Space h="md" />
 
           {/* Notes */}
-          <HeaderAndText title="Notes" text={notes} />
+          <Text fw={700}>Notes</Text>
+          <Markdown content={notes}/>
           <Space h="md" />
 
           {/* Cleaners */}
@@ -165,7 +166,7 @@ const CleaningDetails = ({ cleaning, subscription }: Props) => {
                   <PersonInfoBox
                     person={cleanerInfo}
                     openWhatsapp={openWhatsappChat}
-                    key={cleanerInfo.ID}
+                    key={cleanerInfo.UID}
                   />
                 ))
               ) : (
@@ -182,7 +183,7 @@ const CleaningDetails = ({ cleaning, subscription }: Props) => {
                   <PersonInfoBox
                     person={managerInfo}
                     openWhatsapp={openWhatsappChat}
-                    key={managerInfo.ID}
+                    key={managerInfo.UID}
                   />
                 ))
               ) : (

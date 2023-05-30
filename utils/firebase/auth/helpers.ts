@@ -60,6 +60,7 @@ export const createAccountWithEmailAndPassword = (formValues) => {
       var user = userCredential.user;
       // Compile form data of newly created user and save it to Firestore
       let userData: User = null;
+      console.log("newUser", user)
       if (user) {
         userData = {
           UID: user.uid || "",

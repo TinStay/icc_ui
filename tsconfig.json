@@ -33,7 +33,8 @@
       "@/FS-client-refs" : ["utils/firebase/firestore/references.js"],
       "@/FS-admin-refs" : ["utils/firebase/firestore/adminReferences.js"],
       "@/auth": ["utils/firebase/auth/initAuth.js"],
-      "@/messaging/*": ["utils/firebase/messaging/*"]
+      "@/messaging/*": ["utils/firebase/messaging/*"],
+      "@/public/*": ["public/*"]
     }
   },
   "include": [

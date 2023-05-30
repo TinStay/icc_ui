@@ -84,13 +84,28 @@ function MyApp({ Component, pageProps }: AppProps) {
     },
   };
 
+  const appThemeWithSizeFunction = {
+    ...appTheme,
+    // fn: {
+    //   ...appTheme.fn,
+    //   size: (value) => {
+    //     // Define the custom size function here.
+    //     // You can return a value based on the input value or simply return the input value as it is.
+    //     return value;
+    //   },
+    // },
+  };
+  
   const theme: MantineTheme = useMantineTheme();
   const isDesktopView: boolean = useMediaQuery(
-    `(min-width: ${theme.breakpoints.xs}px)`
+    `(min-width: 36rem)`
   );
+
+  console.log("theme", theme)
 
   useEffect(() => {
     updateCurrentUserState();
+
   }, []);
 
   const updateCurrentUserState = async () => {
@@ -133,3 +148,5 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp;
+
+

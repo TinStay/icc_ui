@@ -5,6 +5,7 @@ import {
   CleaningStatuses,
   SubscriptionTypes,
   NotificationVariants,
+  Months,
 } from "./constants";
 import { showNotification as displayNotification } from "@mantine/notifications";
 import { IconX, IconExclamationMark, IconCheck } from "@tabler/icons";
@@ -97,3 +98,25 @@ export const showNotification = ({title, message, variant, ...props}) => {
     ...props
   });
 };
+
+// Get current month 
+export function getMonthAndYear() {
+  const monthNames = [
+    Months.JAN,  Months.FEB,  Months.MAR,  Months.APR,  Months.MAY,  Months.JUN,
+     Months.JUL,  Months.AUG,  Months.SEP,  Months.OCT,  Months.NOV,  Months.DEC,
+  ];
+
+  const currentDate = new Date();
+  const currentMonthIndex = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+
+  const nextMonthIndex = (currentMonthIndex + 1) % 12;
+  const nextYear = currentMonthIndex === 11 ? currentYear + 1 : currentYear;
+
+  return {
+    currentMonth: monthNames[currentMonthIndex],
+    currentYear: currentYear,
+    nextMonth: monthNames[nextMonthIndex],
+    nextYear: nextYear,
+  };
+}

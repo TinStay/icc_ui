@@ -3,7 +3,7 @@ import "firebase/firestore";
 import { docRef, user, now } from "@/FS-client-refs";
 import { Subscription } from "@/types";
 import { getCurrentUser } from "../auth/helpers";
-import { dummySubscriptionData } from "../../dummyData"; 
+import { dummySubscriptionData, subscriptionDataAirbnb } from "../../dummyData"; 
 const db = firebase.firestore(); // mostly for transactions or batches
 const subscriptionsRef = db.collection("subscriptions");
 
@@ -26,6 +26,24 @@ export const getAllUserSubscriptions = async (UID) => {
       console.log("Error getting subscriptions: ", error);
     });
 
+  return subscriptions;
+};
+
+export const getAllSubscriptions = async () => {
+  let subscriptions = [];
+
+  // Fetch documents
+  await subscriptionsRef
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        subscriptions.push(doc.data());
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting subscriptions: ", error);
+    });
   return subscriptions;
 };
 
@@ -109,7 +127,10 @@ function randomDate(start, end) {
 }
 
 // Actions on Firestore
-// SetSubscriptionDocument("5XyskUDedaSFNE65T2Kg", dummySubscriptionData)
+// SetSubscriptionDocument("", {})
+
+// Actions on Firestore
+// SetSubscriptionDocument("DEJzcxkug21eLriQdOje", subscriptionDataAirbnb)
 
 // Cheetsheet
 // 3.2. Modify a Part of the Document

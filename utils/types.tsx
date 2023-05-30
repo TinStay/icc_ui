@@ -58,13 +58,13 @@ export interface JobAddress {
 
 export interface User {
   UID: string;
-  Registered: firebase.firestore.Timestamp;
-  LastUpdated: firebase.firestore.Timestamp;
+  Registered?: firebase.firestore.Timestamp;
+  LastUpdated?: firebase.firestore.Timestamp;
   FirstName: string;
   LastName: string;
-  Email: string;
-  ImageURL: string;
-  PhoneNumber: string;
+  Email?: string;
+  ImageURL?: string;
+  PhoneNumber?: string;
   Role: UserRole;
 }
 
