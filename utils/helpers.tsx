@@ -9,6 +9,7 @@ import {
 } from "./constants";
 import { showNotification as displayNotification } from "@mantine/notifications";
 import { IconX, IconExclamationMark, IconCheck } from "@tabler/icons";
+import React from "react";
 
 export const GetBackgroundColorForTheme = () => {
   const theme = useMantineTheme();
@@ -89,14 +90,14 @@ export const showNotification = ({title, message, variant, ...props}) => {
   const { icon, color } = getIcon(variant);
   displayNotification({
     id: "notification",
-    disallowClose: false,
+    // disallowClose: false,
     title: title,
     message: message,
     color: color,
     radius: "xl",
     icon: icon,
     ...props
-  });
+  }); 
 };
 
 // Get current month 

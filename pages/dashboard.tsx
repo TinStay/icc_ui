@@ -10,6 +10,7 @@ import { withAuthUser, AuthAction } from "next-firebase-auth";
 
 // Components
 import Loader from "../components/elements/general/Loader";
+import { NextPage } from "next";
 import Navbar from "@/sections/navbar/Navbar";
 import EnterCleaningCodeModal from "@/sections/dashboard/components/EnterCleaningCodeModal";
 import CleaningsList from "@/sections/dashboard/cleanings/CleaningsList";

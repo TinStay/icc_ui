@@ -17,10 +17,13 @@ import {
   Transition,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { IconChevronDown } from "@tabler/icons";
 
 // Types & Constants
 import { MenuLinks } from "@/constants";
 import UserMenu from "./components/UserMenu";
+// Types
+import { HeaderSearchProps } from "@/types";
 
 const HEADER_HEIGHT = 74;
 
@@ -68,7 +71,6 @@ const useStyles = createStyles((theme) => ({
     display: "block",
     lineHeight: 1,
     padding: "8px 12px",
-    margin: "8px",
     borderRadius: theme.radius.xl,
     textDecoration: "none",
     color:
@@ -101,32 +103,34 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const HeaderMenu: React.FC = () => {
+const HeaderMenu: React.FC<HeaderSearchProps> = ({ links }) => {
   const [opened, { toggle, close }] = useDisclosure(false);
+  const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
 
   // Ruoter
   const router = useRouter();
 
   // Menu items
-  const items = MenuLinks.map((link) => (
+  const items = links.map((link) => (
     <a
       key={link.label}
       href={link.link}
       className={cx(classes.link, {
-        [classes.linkActive]: router.asPath === link.link,
+        [classes.linkActive]: active === link.link,
       })}
-      // onClick={(event) => {
-      //   event.preventDefault();
-      //   close();
-      // }}
+      onClick={(event) => {
+        event.preventDefault();
+        setActive(link.link);
+        close();
+      }}
     >
       {link.label}
     </a>
   ));
 
   return (
-    <Header height={HEADER_HEIGHT} mb={20} className={classes.header}>
+    <Header height={HEADER_HEIGHT} mb={120} className={classes.header}>
       <Container>
         <div className={classes.inner}>
           <Logo width="50px" />

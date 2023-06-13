@@ -80,8 +80,8 @@ export const CleaningFrequencies: CleaningFrequencyList = {
 // Header Menu
 export const MenuLinks: HeaderSearchLink[] = [
   {
-    link: "/dashboard",
-    label: "Dashboard",
+    link: "/subscriptions",
+    label: "Subscriptions",
   },
 ];
 // {
