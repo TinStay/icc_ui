@@ -56,10 +56,10 @@ export const getServerSideProps = withAuthUserTokenSSR({
   //   };
   // }
 
-  let subs = await getAllSubscriptions();
-  return {
-    props: { ...subs },
-  };
+  // let subs = await getAllSubscriptions();
+  // return {
+  //   props: { ...subs },
+  // };
 });
 
 export default withAuthUser()(Admin);

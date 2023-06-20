@@ -14,12 +14,19 @@ export interface Subscription {
   DefaultCleaningTypes: CleaningType[];
   DefaultPriority: string;
   Notes: string;
+  Links: Link[];
   Cleaners: User[] | [];
   Managers: User[] | [];
   Users: string[];
   ActivationCode: string;
 }
 
+export interface Link {
+  To: string;
+  Label: string;
+  // TODO: Change the any
+  Icon: any;
+}
 export interface CleaningsPerYear {
   [Year: string]: MonthlyCleanings;
 }

@@ -4,6 +4,7 @@ import moment from "moment";
 import {
   Box,
   Text,
+  Button,
   createStyles,
   Space,
   Title,
@@ -11,7 +12,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 
-import { GetAddressString } from "@/helpers";
+import { GetAddressString, getIconForLink } from "@/helpers";
 // Types
 import { Cleaning, CleaningStatus, Subscription } from "@/types";
 
@@ -54,6 +55,7 @@ const CleaningDetails = ({ cleaning, subscription }: Props) => {
   const status: CleaningStatus = cleaning?.Status;
   const priority = cleaning?.Priority || subscription.DefaultPriority;
   const notes = cleaning?.Notes || subscription.Notes;
+  const links = subscription.Links;
 
   const cleaningTypes =
     (cleaning?.CleaningTypes.length > 0 && cleaning.CleaningTypes) ||
@@ -153,8 +155,24 @@ const CleaningDetails = ({ cleaning, subscription }: Props) => {
           <Space h="md" />
 
           {/* Notes */}
-          <Text fw={700}>Notes</Text>
-          <Markdown content={notes}/>
+          <Text fw={700}>Links & Resources</Text>
+          <Space h="8px" />
+          {links &&
+            links.map((link) => (
+              <Button
+                component="a"
+                href={link.To}
+                target="_blank"
+                variant="outline"
+                leftIcon={getIconForLink(link.Icon)}
+                sx={{marginRight: 8, marginBottom: 6}}
+              >
+                <Text>{link.Label}</Text>
+              </Button>
+            ))}
+
+          {/* // TODO: Implement Markdown text  */}
+          {/* <Markdown content={notes}/> */}
           <Space h="md" />
 
           {/* Cleaners */}

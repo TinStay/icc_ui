@@ -19,8 +19,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { IconChevronDown } from "@tabler/icons";
 
-// Types & Constants
-import { MenuLinks } from "@/constants";
+// Types & Constantss
 import UserMenu from "./components/UserMenu";
 // Types
 import { HeaderSearchProps } from "@/types";
@@ -33,7 +32,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   inner: {
-    padding: "10px 0",
+    padding: "0px 0",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -130,7 +129,7 @@ const HeaderMenu: React.FC<HeaderSearchProps> = ({ links }) => {
   ));
 
   return (
-    <Header height={HEADER_HEIGHT} mb={120} className={classes.header}>
+    <Header height={HEADER_HEIGHT} mb={12} className={classes.header}>
       <Container>
         <div className={classes.inner}>
           <Logo width="50px" />

@@ -6,9 +6,10 @@ import {
   SubscriptionTypes,
   NotificationVariants,
   Months,
+  Icons
 } from "./constants";
 import { showNotification as displayNotification } from "@mantine/notifications";
-import { IconX, IconExclamationMark, IconCheck } from "@tabler/icons";
+import { IconX, IconExclamationMark, IconCheck, IconNotes, IconCalendarEvent} from "@tabler/icons";
 import React from "react";
 
 export const GetBackgroundColorForTheme = () => {
@@ -121,3 +122,17 @@ export function getMonthAndYear() {
     nextYear: nextYear,
   };
 }
+
+// Icons
+export const getIconForLink = (iconText) => {
+  switch (iconText) {
+    case Icons.NOTES:
+      return <IconNotes />;
+    case Icons.GOOGLECALENDAREVENT:
+      return <IconCalendarEvent />;
+    
+
+    default:
+      return null;
+  }
+};

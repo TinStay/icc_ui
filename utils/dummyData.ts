@@ -5,10 +5,12 @@ import {
   CleaningFrequencies,
   UserRoles,
   CleaningTypes,
-  Months
+  Months,
+  Icons
 } from "./constants";
 import { uuid } from "uuidv4";
 import moment from "moment";
+
 
 export const dummyCleaners = [
   {
@@ -161,16 +163,15 @@ export const dummySubscriptionData: Subscription = {
   ActivationCode: "12345",
 };
 
-
 export const airbnbCleaners = [
   {
     UID: uuid(),
-    FirstName: "Martin",
-    LastName: "Staykov",
+    FirstName: "Sara",
+    LastName: "Daniels",
     ImageURL:
-      "https://firebasestorage.googleapis.com/v0/b/icc-realm-dev.appspot.com/o/account-images%2Ftinstay.jpg?alt=media&token=37ef4613-5804-4a03-91cc-37f03f442930",
+      "https://www.resumeviking.com/wp-content/uploads/2019/07/Cleaning-lady-profile-photo.jpg",
     PhoneNumber: "(+359) 887066622",
-    Role: UserRoles.SUPERADMIN,
+    Role: UserRoles.USER,
   },
 ];
 export const airbnbManagers = [
@@ -199,10 +200,10 @@ const airbnbCleanings = [
     ID: uuid(),
     CreatedAt: new Date(),
     UpdatedAt: new Date(),
-    Status: CleaningStatuses.UPCOMING,
+    Status: CleaningStatuses.FINISHED,
     Hours: 2,
     Address: null,
-    Date: new Date("2023-05-01"),
+    Date: new Date("2023-06-09"),
     Time: {
       From: "11:00",
       To: "13:00",
@@ -217,10 +218,46 @@ const airbnbCleanings = [
     ID: uuid(),
     CreatedAt: new Date(),
     UpdatedAt: new Date(),
-    Status: CleaningStatuses.UPCOMING,
+    Status: CleaningStatuses.FINISHED,
     Hours: 1,
     Address: null,
-    Date: new Date("2023-05-03"),
+    Date: new Date("2023-06-12"),
+    Time: {
+      From: "11:00",
+      To: "12:00",
+    },
+    CleaningTypes: [],
+    Notes: "",
+    Priority: "",
+    Cleaners: [],
+    Managers: [],
+  },
+  {
+    ID: uuid(),
+    CreatedAt: new Date(),
+    UpdatedAt: new Date(),
+    Status: CleaningStatuses.FINISHED,
+    Hours: 2,
+    Address: null,
+    Date: new Date("2023-06-15"),
+    Time: {
+      From: "11:00",
+      To: "13:00",
+    },
+    CleaningTypes: [],
+    Notes: "",
+    Priority: "",
+    Cleaners: [],
+    Managers: [],
+  },
+  {
+    ID: uuid(),
+    CreatedAt: new Date(),
+    UpdatedAt: new Date(),
+    Status: CleaningStatuses.FINISHED,
+    Hours: 1,
+    Address: null,
+    Date: new Date("2023-06-20"),
     Time: {
       From: "11:00",
       To: "12:00",
@@ -238,7 +275,25 @@ const airbnbCleanings = [
     Status: CleaningStatuses.UPCOMING,
     Hours: 2,
     Address: null,
-    Date: new Date("2023-05-06"),
+    Date: new Date("2023-06-22"),
+    Time: {
+      From: "11:00",
+      To: "13:00",
+    },
+    CleaningTypes: [],
+    Notes: "",
+    Priority: "",
+    Cleaners: [],
+    Managers: [],
+  },
+  {
+    ID: uuid(),
+    CreatedAt: new Date(),
+    UpdatedAt: new Date(),
+    Status: CleaningStatuses.UPCOMING,
+    Hours: 2,
+    Address: null,
+    Date: new Date("2023-06-23"),
     Time: {
       From: "11:00",
       To: "13:00",
@@ -256,7 +311,7 @@ const airbnbCleanings = [
     Status: CleaningStatuses.UPCOMING,
     Hours: 1,
     Address: null,
-    Date: new Date("2023-05-07"),
+    Date: new Date("2023-06-24"),
     Time: {
       From: "11:00",
       To: "12:00",
@@ -274,7 +329,7 @@ const airbnbCleanings = [
     Status: CleaningStatuses.UPCOMING,
     Hours: 2,
     Address: null,
-    Date: new Date("2023-05-12"),
+    Date: new Date("2023-06-25"),
     Time: {
       From: "11:00",
       To: "13:00",
@@ -292,43 +347,7 @@ const airbnbCleanings = [
     Status: CleaningStatuses.UPCOMING,
     Hours: 2,
     Address: null,
-    Date: new Date("2023-05-14"),
-    Time: {
-      From: "11:00",
-      To: "13:00",
-    },
-    CleaningTypes: [],
-    Notes: "",
-    Priority: "",
-    Cleaners: [],
-    Managers: [],
-  },
-  {
-    ID: uuid(),
-    CreatedAt: new Date(),
-    UpdatedAt: new Date(),
-    Status: CleaningStatuses.UPCOMING,
-    Hours: 1,
-    Address: null,
-    Date: new Date("2023-05-15"),
-    Time: {
-      From: "11:00",
-      To: "12:00",
-    },
-    CleaningTypes: [],
-    Notes: "",
-    Priority: "",
-    Cleaners: [],
-    Managers: [],
-  },
-  {
-    ID: uuid(),
-    CreatedAt: new Date(),
-    UpdatedAt: new Date(),
-    Status: CleaningStatuses.UPCOMING,
-    Hours: 2,
-    Address: null,
-    Date: new Date("2023-05-18"),
+    Date: new Date("2023-06-26"),
     Time: {
       From: "11:00",
       To: "13:00",
@@ -346,7 +365,7 @@ const airbnbCleanings = [
     Status: CleaningStatuses.UPCOMING,
     Hours: 2,
     Address: null,
-    Date: new Date("2023-05-19"),
+    Date: new Date("2023-06-27"),
     Time: {
       From: "11:00",
       To: "13:00",
@@ -357,9 +376,28 @@ const airbnbCleanings = [
     Cleaners: [],
     Managers: [],
   },
-]
+  {
+    ID: uuid(),
+    CreatedAt: new Date(),
+    UpdatedAt: new Date(),
+    Status: CleaningStatuses.UPCOMING,
+    Hours: 2,
+    Address: null,
+    Date: new Date("2023-06-28"),
+    Time: {
+      From: "11:00",
+      To: "13:00",
+    },
+    CleaningTypes: [],
+    Notes: "",
+    Priority: "",
+    Cleaners: [],
+    Managers: [],
+  },
+];
 
-export const subscriptionDataAirbnb: Subscription = {
+
+export const subscriptionDataAirbnbKruisstraat130: Subscription = {
   ID: "DEJzcxkug21eLriQdOje",
   CreatedAt: new Date(),
   UpdatedAt: new Date(),
@@ -378,93 +416,268 @@ export const subscriptionDataAirbnb: Subscription = {
   Managers: airbnbManagers,
   AllCleanings: {
     "2023": {
-      [Months.MAY]: [...airbnbCleanings],
+      [Months.JUN]: [...airbnbCleanings],
     },
   },
-  AllCleaningTypes: [
-    CleaningTypes.HOUSECLEANING,
-    CleaningTypes.DEEPCLEANING,
-  ],
-  DefaultCleaningTypes: [
-    CleaningTypes.HOUSECLEANING,
-  ],
+  AllCleaningTypes: [CleaningTypes.HOUSECLEANING, CleaningTypes.DEEPCLEANING],
+  DefaultCleaningTypes: [CleaningTypes.HOUSECLEANING],
   DefaultPriority: "Beds & Kitchen",
-  Notes: `Before Cleaning:
-  - Perform quick evaluation
-    - Take pictures if anything is broken
-    - Turn thermostat to 19 degrees
-    - Open windows for ventilation
-  - Prepare X number of bedsheets and towels
-  
-  First Floor:
-  - Dust corners, top surfaces, and fixtures
-  - Wipe down top surfaces and furniture with wet cloth
-  - Empty and replace the trash bag
-    - Match size of trash bag with trash bin  
-  - Prepare bed sheets under the couch (if they have not been used)
-  - Place dirty towels and sheets in the shed
-  - Replace hand towel in kitchen
-  - Vacuum clean the floor
-    - Move and clean under the small table
-    - Under the couch
-    - Stairs to the second floor
-  - Wipe hair off sink and toilet using wet cloth or paper
-  - Mop the floor
-  - Add toilet cleaner and leave it there
-  - If needed
-    - Wash and dry dishes/glasses
-    - Remove used items from the fridge
-    - Wipe mirrors 
-    - Refill soap 
-    - Scrub sink and toilet with a sponge
-    - Replace or add another roll of toilet paper
-    - Quickly dust again
-  
-  Second Floor:
-  - Change bed sheets (use matching pillowcases)
-  - Dust corners and surfaces
-  - Wipe down surfaces with wet cloth
-  - Clean bathroom 
-    - Scrub sink & bathtub with sponge
-    - Remove hair
-  - Place dirty towels in the shed
-  - Replace hand towel
-  - Vacuum clean (including under the beds!)
-  - Mop the floor
-  - If needed
-    - Clean mirrors
-    - Replace toilet paper and trash bags 
-    - Refill soap
-  
-  After Cleaning:
-  - Fill the water bottle and put X number of glasses on the living room table (X - number of upcoming guests)
-  - Place X number of towels on the table
-  - Leave bathroom windows open for ventilation
-  - Close all other windows
-  - Close shed
-  - Close the backdoor
-  - Inspect the house for quality control and ensure everything is done
-    - Take photos of beds
-  - Dispose of the trash
-  - Place the key in the locker
-  
-  Useful Info & Tips
-  - Beds
-    - White or black sheets go on top of mattresses
-    - Gray are blankets
-    - Match pillowcases
-  - Trash 
-    - Trash bags are under the sink
-    - Put smallest bags in the smallest trashcans
-  - Mopping
-    - Mop corners of rooms
-    - Mop dirty spots on the ground
-  - Wiping
-    - Avoid leaving marks on the table or furniture
-  - Use the same glasses for consistency
-  - Put unknown items in shed`,
+  Notes: ``,
+  Links: [
+    {
+      To: "https://www.evernote.com/shard/s317/sh/3347f1ac-af2b-58fd-9871-3efb48d06c2c/0xMYjfFSMPPvuH_wU64rhbanMoqffSqBAglaVAhRjotcDsZsH34ZiI-fNQ",
+      Label: "View Checklist",
+      Icon: Icons.NOTES
+    },
+    {
+      To: "https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NjZ1cHZ1OG1qMTRvNGoxb2loZzVpYTBvamkgYjZiZjI4NzEzYjQ4MjY1NzY4N2NlNTU3NDE2MjUyMzU1OTEyYWI4MDNlNGYzNmI5OTExZTMzZDRjMjYwOTllZEBn&tmsrc=b6bf28713b482657687ce557416252355912ab803e4f36b9911e33d4c26099ed%40group.calendar.google.com",
+      Label: "Open Google Calendar",
+      Icon: Icons.GOOGLECALENDAREVENT
+    },
+  ],
   Users: [""],
   ActivationCode: "13076",
 };
 
+// const airbnbCleaningsNeunen114 = [
+//   {
+//     ID: uuid(),
+//     CreatedAt: new Date(),
+//     UpdatedAt: new Date(),
+//     Status: CleaningStatuses.FINISHED,
+//     Hours: 2,
+//     Address: null,
+//     Date: new Date("2023-06-09"),
+//     Time: {
+//       From: "11:00",
+//       To: "13:00",
+//     },
+//     CleaningTypes: [],
+//     Notes: "",
+//     Priority: "",
+//     Cleaners: [],
+//     Managers: [],
+//   },
+//   {
+//     ID: uuid(),
+//     CreatedAt: new Date(),
+//     UpdatedAt: new Date(),
+//     Status: CleaningStatuses.FINISHED,
+//     Hours: 1,
+//     Address: null,
+//     Date: new Date("2023-06-12"),
+//     Time: {
+//       From: "11:00",
+//       To: "12:00",
+//     },
+//     CleaningTypes: [],
+//     Notes: "",
+//     Priority: "",
+//     Cleaners: [],
+//     Managers: [],
+//   },
+//   {
+//     ID: uuid(),
+//     CreatedAt: new Date(),
+//     UpdatedAt: new Date(),
+//     Status: CleaningStatuses.FINISHED,
+//     Hours: 2,
+//     Address: null,
+//     Date: new Date("2023-06-15"),
+//     Time: {
+//       From: "11:00",
+//       To: "13:00",
+//     },
+//     CleaningTypes: [],
+//     Notes: "",
+//     Priority: "",
+//     Cleaners: [],
+//     Managers: [],
+//   },
+//   {
+//     ID: uuid(),
+//     CreatedAt: new Date(),
+//     UpdatedAt: new Date(),
+//     Status: CleaningStatuses.FINISHED,
+//     Hours: 1,
+//     Address: null,
+//     Date: new Date("2023-06-20"),
+//     Time: {
+//       From: "11:00",
+//       To: "12:00",
+//     },
+//     CleaningTypes: [],
+//     Notes: "",
+//     Priority: "",
+//     Cleaners: [],
+//     Managers: [],
+//   },
+//   {
+//     ID: uuid(),
+//     CreatedAt: new Date(),
+//     UpdatedAt: new Date(),
+//     Status: CleaningStatuses.UPCOMING,
+//     Hours: 2,
+//     Address: null,
+//     Date: new Date("2023-06-22"),
+//     Time: {
+//       From: "11:00",
+//       To: "13:00",
+//     },
+//     CleaningTypes: [],
+//     Notes: "",
+//     Priority: "",
+//     Cleaners: [],
+//     Managers: [],
+//   },
+//   {
+//     ID: uuid(),
+//     CreatedAt: new Date(),
+//     UpdatedAt: new Date(),
+//     Status: CleaningStatuses.UPCOMING,
+//     Hours: 2,
+//     Address: null,
+//     Date: new Date("2023-06-23"),
+//     Time: {
+//       From: "11:00",
+//       To: "13:00",
+//     },
+//     CleaningTypes: [],
+//     Notes: "",
+//     Priority: "",
+//     Cleaners: [],
+//     Managers: [],
+//   },
+//   {
+//     ID: uuid(),
+//     CreatedAt: new Date(),
+//     UpdatedAt: new Date(),
+//     Status: CleaningStatuses.UPCOMING,
+//     Hours: 1,
+//     Address: null,
+//     Date: new Date("2023-06-24"),
+//     Time: {
+//       From: "11:00",
+//       To: "12:00",
+//     },
+//     CleaningTypes: [],
+//     Notes: "",
+//     Priority: "",
+//     Cleaners: [],
+//     Managers: [],
+//   },
+//   {
+//     ID: uuid(),
+//     CreatedAt: new Date(),
+//     UpdatedAt: new Date(),
+//     Status: CleaningStatuses.UPCOMING,
+//     Hours: 2,
+//     Address: null,
+//     Date: new Date("2023-06-25"),
+//     Time: {
+//       From: "11:00",
+//       To: "13:00",
+//     },
+//     CleaningTypes: [],
+//     Notes: "",
+//     Priority: "",
+//     Cleaners: [],
+//     Managers: [],
+//   },
+//   {
+//     ID: uuid(),
+//     CreatedAt: new Date(),
+//     UpdatedAt: new Date(),
+//     Status: CleaningStatuses.UPCOMING,
+//     Hours: 2,
+//     Address: null,
+//     Date: new Date("2023-06-26"),
+//     Time: {
+//       From: "11:00",
+//       To: "13:00",
+//     },
+//     CleaningTypes: [],
+//     Notes: "",
+//     Priority: "",
+//     Cleaners: [],
+//     Managers: [],
+//   },
+//   {
+//     ID: uuid(),
+//     CreatedAt: new Date(),
+//     UpdatedAt: new Date(),
+//     Status: CleaningStatuses.UPCOMING,
+//     Hours: 2,
+//     Address: null,
+//     Date: new Date("2023-06-27"),
+//     Time: {
+//       From: "11:00",
+//       To: "13:00",
+//     },
+//     CleaningTypes: [],
+//     Notes: "",
+//     Priority: "",
+//     Cleaners: [],
+//     Managers: [],
+//   },
+//   {
+//     ID: uuid(),
+//     CreatedAt: new Date(),
+//     UpdatedAt: new Date(),
+//     Status: CleaningStatuses.UPCOMING,
+//     Hours: 2,
+//     Address: null,
+//     Date: new Date("2023-06-28"),
+//     Time: {
+//       From: "11:00",
+//       To: "13:00",
+//     },
+//     CleaningTypes: [],
+//     Notes: "",
+//     Priority: "",
+//     Cleaners: [],
+//     Managers: [],
+//   },
+// ];
 
+// export const subscriptionDataAirbnbNuenen114: Subscription = {
+//   ID: "DEJzcxkug21eLriQdOje",
+//   CreatedAt: new Date(),
+//   UpdatedAt: new Date(),
+//   Address: {
+//     Street: "Europalaan", 
+//     StreetNumber: "114",
+//     PostalCode: "5672 AL",
+//     City: "Nuenen",
+//     Country: "Netherlands",
+//     Addition: "",
+//   },
+//   SubscriptionType: "Standard",
+//   MonthlyHours: 15,
+//   CleaningFrequency: CleaningFrequencies.WEEKLY,
+//   Cleaners: airbnbCleaners,
+//   Managers: airbnbManagers,
+//   AllCleanings: {
+//     "2023": {
+//       [Months.JUN]: [...airbnbCleaningsNeunen114],
+//     },
+//   },
+//   AllCleaningTypes: [CleaningTypes.HOUSECLEANING, CleaningTypes.DEEPCLEANING],
+//   DefaultCleaningTypes: [CleaningTypes.HOUSECLEANING],
+//   DefaultPriority: "Beds & Kitchen",
+//   Notes: ``,
+//   Links: [
+//     {
+//       To: "https://www.evernote.com/shard/s317/sh/3347f1ac-af2b-58fd-9871-3efb48d06c2c/0xMYjfFSMPPvuH_wU64rhbanMoqffSqBAglaVAhRjotcDsZsH34ZiI-fNQ",
+//       Label: "View Checklist",
+//       Icon: Icons.NOTES
+//     },
+//     {
+//       To: "https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NjZ1cHZ1OG1qMTRvNGoxb2loZzVpYTBvamkgYjZiZjI4NzEzYjQ4MjY1NzY4N2NlNTU3NDE2MjUyMzU1OTEyYWI4MDNlNGYzNmI5OTExZTMzZDRjMjYwOTllZEBn&tmsrc=b6bf28713b482657687ce557416252355912ab803e4f36b9911e33d4c26099ed%40group.calendar.google.com",
+//       Label: "Open Google Calendar",
+//       Icon: Icons.GOOGLECALENDAREVENT
+//     },
+//   ],
+//   Users: [""],
+//   ActivationCode: "13076",
+// };

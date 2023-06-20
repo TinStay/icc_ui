@@ -10,11 +10,11 @@ import { withAuthUser, AuthAction } from "next-firebase-auth";
 
 // Components
 import Loader from "../components/elements/general/Loader";
-import { NextPage } from "next";
 import Navbar from "@/sections/navbar/Navbar";
 import EnterCleaningCodeModal from "@/sections/dashboard/components/EnterCleaningCodeModal";
 import CleaningsList from "@/sections/dashboard/cleanings/CleaningsList";
 
+import { MenuLinks } from "@/constants";
 // Mantine
 import {
   Box,
@@ -95,7 +95,7 @@ const Dashboard: NextPage<Props> = (props) => {
         backgroundColor: GetBackgroundColorForTheme(),
       }}
     >
-      <Navbar />
+      <Navbar links={MenuLinks}/>
 
       <Container sx={{ height: "100%" }}>
         <Flex className={classes.subHeader}>

@@ -42,7 +42,6 @@ const useStyles = createStyles((theme) => ({
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-    
     },
   },
   subscriptionTypeBadgeContainer: {
@@ -73,10 +72,10 @@ const SubscriptionCleaningBox = ({
 
   const { classes } = useStyles();
 
-  console.log("isDesktopView", isDesktopView)
   return (
     <CustomizedPaper
       p={isDesktopView ? "xl" : "sm"}
+      mb={isDesktopView ? "3rem" : "2rem"}
       radius="xl"
       shadow="lg"
       sx={{
@@ -97,54 +96,65 @@ const SubscriptionCleaningBox = ({
         {/* Show address on top in mobile view */}
         {!isDesktopView && <Text fz="xl">{address}</Text>}
 
-        {/* Monthly hours semi circle */}
-        <Space h="md" />
-        <CleaningHoursSemiCircle>
-          <Title order={2}>{subscriptionData?.MonthlyHours}</Title>
-          <Text>monthly hours</Text>
-        </CleaningHoursSemiCircle>
-        <Space h="md" />
+        {!isDesktopView && (
+          <Box my={10}>
+            <CleaningHoursSemiCircle>
+              <Title order={2}>{subscriptionData?.MonthlyHours}</Title>
+              <Text>monthly hours</Text>
+            </CleaningHoursSemiCircle>
+            </Box>
+          )}
 
-        <Box sx={{ marginLeft: isDesktopView ? "2rem" : "0px" }}>
-          {/* Show address in desktop view */}
-          {isDesktopView && <Text fz="xl">{address}</Text>}
+        <Box sx={{ width: "80%", display: "flex", alignItems: "center" }}>
+          {/* Monthly hours semi circle */}
+          {isDesktopView && (
+            <CleaningHoursSemiCircle>
+              <Title order={2}>{subscriptionData?.MonthlyHours}</Title>
+              <Text>monthly hours</Text>
+            </CleaningHoursSemiCircle>
+          )}
 
-          {/* Cleaning types */}
-          <Box sx={!isDesktopView && { textAlign: "center" }}>
-            <CleaningTypesBadgeList
-              types={subscriptionData?.AllCleaningTypes}
-            />
+          <Box sx={{ marginLeft: isDesktopView ? "2rem" : "0px" }}>
+            {/* Show address in desktop view */}
+            {isDesktopView && <Text fz="xl">{address}</Text>}
+
+            {/* Cleaning types */}
+            <Box sx={!isDesktopView && { textAlign: "center" }}>
+              <CleaningTypesBadgeList
+                types={subscriptionData?.AllCleaningTypes}
+              />
+            </Box>
+
+            <Flex
+              gap="md"
+              direction={isDesktopView ? "row" : "column"}
+              p={isDesktopView ? "0" : "md"}
+              sx={{
+                marginTop: theme.spacing.sm,
+              }}
+            >
+              {/* Frequency */}
+              <IconAndText
+                icon={<IconRotateRectangle />}
+                text={subscriptionData?.CleaningFrequency}
+                tooltipText="Cleaning frequency"
+              />
+
+              {/* Priority */}
+              <IconAndText
+                icon={<IconSortAscending2 />}
+                text={subscriptionData?.DefaultPriority}
+                tooltipText="Cleaning priority"
+              />
+
+              {/* Cleaners */}
+              <IconAndText
+                icon={<IconUsers />}
+                text={subscriptionData?.Cleaners.length}
+                tooltipText="Number of cleaners"
+              />
+            </Flex>
           </Box>
-
-          <Flex
-            gap="md"
-            direction={isDesktopView ? "row" : "column"}
-            p={isDesktopView ? "0" : "md"}
-            sx={{
-              marginTop: theme.spacing.sm,
-            }}
-          >
-            {/* Frequency */}
-            <IconAndText
-              icon={<IconRotateRectangle />}
-              text={subscriptionData?.CleaningFrequency}
-              tooltipText="Cleaning frequency"
-            />
-
-            {/* Priority */}
-            <IconAndText
-              icon={<IconSortAscending2 />}
-              text={subscriptionData?.DefaultPriority}
-              tooltipText="Cleaning priority"
-            />
-
-            {/* Cleaners */}
-            <IconAndText
-              icon={<IconUsers />}
-              text={subscriptionData?.Cleaners.length}
-              tooltipText="Number of cleaners"
-            />
-          </Flex>
         </Box>
       </Box>
 

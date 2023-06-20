@@ -5,7 +5,7 @@ import {
   Roles,
   CleaningStatusList,
   SubscriptionTypeList,
-  NotificationVariantList
+  NotificationVariantList,
 } from "./types";
 
 export const appVersion = "0.0.5";
@@ -28,7 +28,7 @@ export const SubscriptionTypes: SubscriptionTypeList = {
   STARTER: "Starter",
   STANDARD: "Standard",
   DELUXE: "Deluxe",
-  CUSTOM: "Custom",  
+  CUSTOM: "Custom",
 };
 
 // Notification types
@@ -36,7 +36,7 @@ export const NotificationVariants: NotificationVariantList = {
   SUCCESS: "Success",
   WARNING: "Warning",
   DANGER: "Danger",
-  INFO: "Info",  
+  INFO: "Info",
 };
 
 // App support for cleaning types
@@ -74,7 +74,6 @@ export const CleaningFrequencies: CleaningFrequencyList = {
   ONCE: "Once a month",
   MORETHANFIVETIMES: "More than 5 times a month",
   LESSTHANFIVETIMES: "Less than 5 times a month",
-  
 };
 
 // Header Menu
@@ -103,3 +102,10 @@ export const Months = {
   NOV: "November",
   DEC: "December",
 };
+
+export const Icons = {
+  NOTES: "Notes",
+  GOOGLECALENDAREVENT: "Google Calendar Event",
+};
+
+

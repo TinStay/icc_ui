@@ -53,7 +53,7 @@ const CleaningsList = ({ subscriptions }) => {
             showCleaningDetails={(cleaning) =>
               onOpenCleaningDetails(cleaning, subscription)
             }
-            key={subscription}
+            key={subscription.ID}
           />
         ))}
 
