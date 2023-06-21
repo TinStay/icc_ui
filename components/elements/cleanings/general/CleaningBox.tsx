@@ -17,7 +17,7 @@ import { Cleaning, CleaningType } from "@/types";
 
 import moment from "moment";
 import { getColorForType } from "@/helpers";
-import CleaningStatusChip from "../general/CleaningStatusChip";
+import CleaningStatusChip from "./CleaningStatusChip";
 
 const useStyles = createStyles((theme) => ({
   cleaningBoxPaper: {

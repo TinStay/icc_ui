@@ -13,7 +13,7 @@ import { Calendar } from "@mantine/dates";
 // Types
 import { Subscription, Cleaning } from "@/types";
 
-import CleaningBox from "./CleaningBox";
+import CleaningBox from "../general/CleaningBox";
 import CustomizedPaper from "../../general/CustomizedPaper";
 
 // Helpers
@@ -303,18 +303,6 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
           <Box>No Cleanings Available</Box>
         )}
       </Box>
-      {/* <Box className={classes.cleaningsListContainer}>
-        {viewCleanings &&
-          viewCleanings?.map((cleaning) => (
-            <CleaningBox
-              key={cleaning.ID}
-              cleaningInfo={cleaning}
-              monthlyHours={subscription.MonthlyHours}
-              defaultCleaningTypes={subscription.DefaultCleaningTypes}
-              onShowDetails={() => onShowCleaningDetails(cleaning)}
-            />
-          ))}
-      </Box> */}
     </Box>
   );
 };
