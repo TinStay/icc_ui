@@ -12,7 +12,7 @@ const Logo = (props) => {
       src={
         theme.colorScheme === "light"
           ? "/ICCLogoBlueText.png"
-          : "ICClogoWhiteText.png"
+          : "/ICClogoWhiteText.png"
       }
       {...props}
     />
