@@ -17,11 +17,11 @@ import { GetAddressString, getIconForLink } from "@/helpers";
 import { Cleaning, CleaningStatus, Subscription } from "@/types";
 
 // Components
-import CleaningHoursSemiCircle from "../general/CleaningHoursCircle";
-import CleaningTypesBadgeList from "../general/CleaningTypesBadgeList";
+import CleaningHoursSemiCircle from "./CleaningHoursCircle";
+import CleaningTypesBadgeList from "./CleaningTypesBadgeList";
 import CustomizedPaper from "@/elements/general/CustomizedPaper";
-import PersonInfoBox from "../general/PersonInfoBox";
-import CleaningStatusChip from "../general/CleaningStatusChip";
+import PersonInfoBox from "./PersonInfoBox";
+import CleaningStatusChip from "./CleaningStatusChip";
 import { UtilitiesContext } from "@/contexts";
 import Markdown from "@/elements/general/markdown/Markdown";
 

@@ -12,7 +12,7 @@ import {
 
 
 import SubscriptionCleaningBox from "./SubscriptionCleaningBox";
-import CleaningDetails from "@/elements/cleanings/subscriptions/CleaningDetails";
+import CleaningDetails from "@/elements/cleanings/general/CleaningDetails";
 
 import { Cleaning, Subscription } from "@/types";
 import { UtilitiesContext } from "@/contexts";
