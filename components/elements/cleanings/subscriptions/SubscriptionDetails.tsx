@@ -14,14 +14,11 @@ import { Calendar } from "@mantine/dates";
 import { Subscription, Cleaning } from "@/types";
 
 import CleaningBox from "./CleaningBox";
-import { useMediaQuery } from "@mantine/hooks";
-import CleaningDetails from "./CleaningDetails";
 import CustomizedPaper from "../../general/CustomizedPaper";
 
 // Helpers
 import { UtilitiesContext } from "@/contexts";
 import { getMonthAndYear } from "@/helpers";
-import { Months } from "@/constants";
 
 const useStyles = createStyles((theme) => ({
   subscriptionDetailsContainer: {
