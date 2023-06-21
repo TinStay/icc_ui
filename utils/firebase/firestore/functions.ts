@@ -3,7 +3,7 @@ import "firebase/firestore";
 import { docRef, user, now } from "@/FS-client-refs";
 import { Subscription } from "@/types";
 import { getCurrentUser } from "../auth/helpers";
-import { dummySubscriptionData, subscriptionDataAirbnbKruisstraat130 } from "../../dummyData"; 
+import { dummySubscriptionData, subscriptionDataAirbnbKruisstraat130, subscriptionDataAirbnbNuenen114 } from "../../dummyData"; 
 const db = firebase.firestore(); // mostly for transactions or batches
 const subscriptionsRef = db.collection("subscriptions");
 
@@ -131,6 +131,7 @@ function randomDate(start, end) {
 
 // Actions on Firestore
 // SetSubscriptionDocument("DEJzcxkug21eLriQdOje", subscriptionDataAirbnbKruisstraat130)
+// SetSubscriptionDocument("HpfHHSOBQevqMIa8DlSW", subscriptionDataAirbnbNuenen114)
 
 // Cheetsheet
 // 3.2. Modify a Part of the Document

@@ -71,7 +71,7 @@ const Dashboard: NextPage<Props> = (props) => {
   const getSubscriptions = async () => {
     if (connectedUser) {
       setLoading(true);
-      
+
       let documents = [];
       if (connectedUser.UID)
         documents = await getAllUserSubscriptions(connectedUser.UID);
@@ -95,7 +95,7 @@ const Dashboard: NextPage<Props> = (props) => {
         backgroundColor: GetBackgroundColorForTheme(),
       }}
     >
-      <Navbar links={MenuLinks}/>
+      <Navbar links={MenuLinks} />
 
       <Container sx={{ height: "100%" }}>
         <Flex className={classes.subHeader}>
@@ -119,7 +119,7 @@ const Dashboard: NextPage<Props> = (props) => {
                 <CleaningsList subscriptions={subscriptions} />
               ) : (
                 // Show default message when there are no cleanings
-                <Paper shadow="xs" radius="xl" p="xl" sx={{height:150}}>
+                <Paper shadow="xs" radius="xl" p="xl" sx={{ height: 150 }}>
                   <Center h={100}>
                     <Text c="dimmed">You have no cleanings yet</Text>
                   </Center>
@@ -138,7 +138,8 @@ const Dashboard: NextPage<Props> = (props) => {
           opened={showModal}
           onClose={() => setShowModal(false)}
           onSuccess={() => {
-            getSubscriptions();
+            setTimeout(() => getSubscriptions(), 500);
+
             setShowModal(false);
           }}
           title="Enter activation code"
