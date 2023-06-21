@@ -13,7 +13,7 @@ import { Calendar } from "@mantine/dates";
 // Types
 import { Subscription, Cleaning } from "@/types";
 
-import CleaningBox from "../general/CleaningBox";
+import CleaningBox from "./CleaningBox";
 import CustomizedPaper from "../../general/CustomizedPaper";
 
 // Helpers

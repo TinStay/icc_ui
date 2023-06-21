@@ -6,9 +6,9 @@ import { GetAddressString } from "@/helpers";
 
 // Components
 import CleaningHoursSemiCircle from "@/elements/cleanings/general/CleaningHoursCircle";
-import SubscriptionTypeBadge from "@/elements/cleanings/subscriptions/SubscriptionTypeBadge";
+import SubscriptionTypeBadge from "@/elements/cleanings/general/SubscriptionTypeBadge";
 import CleaningTypesBadgeList from "@/elements/cleanings/general/CleaningTypesBadgeList";
-import SubscriptionDetails from "@/elements/cleanings/subscriptions/SubscriptionDetails";
+import SubscriptionDetails from "@/elements/cleanings/general/SubscriptionDetails";
 import CustomizedPaper from "@/elements/general/CustomizedPaper";
 // Mantine
 import {
