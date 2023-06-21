@@ -58,6 +58,7 @@ const AuthenticationImage = () => {
   const [loading, setLoading] = useState(false);
   const { classes } = useStyles();
 
+
   const form = useForm({
     initialValues: {
       firstName: "",
@@ -218,6 +219,6 @@ const AuthenticationImage = () => {
 
 export default withAuthUser({
   whenAuthed: AuthAction.REDIRECT_TO_APP,
-  whenUnauthedBeforeInit: AuthAction.REDIRECT_TO_LOGIN,
-  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+  whenUnauthedBeforeInit: AuthAction.REDIRECT_TO_APP,
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_APP,
 })(AuthenticationImage);

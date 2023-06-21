@@ -11,7 +11,7 @@ const Logo = (props) => {
     <Image
       src={
         theme.colorScheme === "light"
-          ? "/ICCLogoBlueText.png"
+          ? "/ICClogoBlueText.png"
           : "/ICClogoWhiteText.png"
       }
       {...props}
