@@ -6,11 +6,10 @@ import {
   UserRoles,
   CleaningTypes,
   Months,
-  Icons
+  Icons,
 } from "./constants";
 import { uuid } from "uuidv4";
 import moment from "moment";
-
 
 export const dummyCleaners = [
   {
@@ -70,6 +69,7 @@ export const dummySubscriptionData: Subscription = {
   CleaningFrequency: CleaningFrequencies.THREETIMES,
   Cleaners: dummyCleaners,
   Managers: dummyManagers,
+  Links: [],
   AllCleanings: {
     "2023": {
       February: [
@@ -396,7 +396,6 @@ const airbnbCleanings = [
   },
 ];
 
-
 export const subscriptionDataAirbnbKruisstraat130: Subscription = {
   ID: "DEJzcxkug21eLriQdOje",
   CreatedAt: new Date(),
@@ -427,12 +426,12 @@ export const subscriptionDataAirbnbKruisstraat130: Subscription = {
     {
       To: "https://www.evernote.com/shard/s317/sh/3347f1ac-af2b-58fd-9871-3efb48d06c2c/0xMYjfFSMPPvuH_wU64rhbanMoqffSqBAglaVAhRjotcDsZsH34ZiI-fNQ",
       Label: "View Checklist",
-      Icon: Icons.NOTES
+      Icon: Icons.NOTES,
     },
     {
       To: "https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NjZ1cHZ1OG1qMTRvNGoxb2loZzVpYTBvamkgYjZiZjI4NzEzYjQ4MjY1NzY4N2NlNTU3NDE2MjUyMzU1OTEyYWI4MDNlNGYzNmI5OTExZTMzZDRjMjYwOTllZEBn&tmsrc=b6bf28713b482657687ce557416252355912ab803e4f36b9911e33d4c26099ed%40group.calendar.google.com",
       Label: "Open Google Calendar",
-      Icon: Icons.GOOGLECALENDAREVENT
+      Icon: Icons.GOOGLECALENDAREVENT,
     },
   ],
   Users: [""],
@@ -645,7 +644,7 @@ export const subscriptionDataAirbnbKruisstraat130: Subscription = {
 //   CreatedAt: new Date(),
 //   UpdatedAt: new Date(),
 //   Address: {
-//     Street: "Europalaan", 
+//     Street: "Europalaan",
 //     StreetNumber: "114",
 //     PostalCode: "5672 AL",
 //     City: "Nuenen",

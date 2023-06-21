@@ -218,6 +218,6 @@ const AuthenticationImage = () => {
 
 export default withAuthUser({
   whenAuthed: AuthAction.REDIRECT_TO_APP,
-  whenUnauthedBeforeInit: AuthAction.REDIRECT_TO_APP,
-  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_APP,
+  whenUnauthedBeforeInit: AuthAction.REDIRECT_TO_LOGIN,
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
 })(AuthenticationImage);

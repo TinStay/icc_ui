@@ -62,14 +62,14 @@ function EnterCleaningCodeModal({ opened, onSuccess, onClose, ...props }) {
       centered
       radius="xl"
       padding="xl"
-      overlayColor={
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[9]
-          : theme.colors.gray[2]
-      }
-      overlayOpacity={0.55}
-      overlayBlur={5}
-      transition="slide-left"
+      // overlayColor={
+      //   theme.colorScheme === "dark"
+      //     ? theme.colors.dark[9]
+      //     : theme.colors.gray[2]
+      // }
+      // overlayOpacity={0.55}
+      // overlayBlur={5}
+      // transition="slide-left"
       {...props}
     >
       <form onSubmit={form.onSubmit(submitCode)}>

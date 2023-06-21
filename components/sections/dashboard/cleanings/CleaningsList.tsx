@@ -63,14 +63,14 @@ const CleaningsList = ({ subscriptions }) => {
         onClose={() => setShowCleaningDetails(false)}
         title={<Title order={4}>Cleaning details</Title>}
         position="right"
-        overlayColor={
-          theme.colorScheme === "dark"
-            ? theme.colors.dark[9]
-            : theme.colors.gray[2]
-        }
-        overlayOpacity={0.55}
-        overlayBlur={5}
-        transition="slide-left"
+        // overlayColor={
+        //   theme.colorScheme === "dark"
+        //     ? theme.colors.dark[9]
+        //     : theme.colors.gray[2]
+        // }
+        // overlayOpacity={0.55}
+        // overlayBlur={5}
+        // transition="slide-left"
         padding={isDesktopView ? "lg" : "sm"}
         size="lg"
         classNames={{ body: classes.drawerBody }}

@@ -34,32 +34,32 @@ const Admin = ({ isAdmin, decodedToken }) => {
   );
 };
 
-export const getServerSideProps = withAuthUserTokenSSR({
-  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-})(async ({ AuthUser, res }) => {
-  // const token = await AuthUser.getIdToken();
-  // const decodedToken = await admin.auth().verifyIdToken(token);
+// export const getServerSideProps = withAuthUserTokenSSR({
+//   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+// })(async ({ AuthUser, res }) => {
+//   // const token = await AuthUser.getIdToken();
+//   // const decodedToken = await admin.auth().verifyIdToken(token);
 
-  // const isAdmin = !!decodedToken.admin;
+//   // const isAdmin = !!decodedToken.admin;
 
-  // if (typeof window === "undefined" && !isAdmin) {
-  //   res.writeHead(302, { Location: "/" });
-  //   res.end();
+//   // if (typeof window === "undefined" && !isAdmin) {
+//   //   res.writeHead(302, { Location: "/" });
+//   //   res.end();
 
-  //   return { props: {} }; // as never with Typescript
-  // } else {
-  //   return {
-  //     props: {
-  //       isAdmin: isAdmin,
-  //       decodedToken: decodedToken,
-  //     },
-  //   };
-  // }
+//   //   return { props: {} }; // as never with Typescript
+//   // } else {
+//   //   return {
+//   //     props: {
+//   //       isAdmin: isAdmin,
+//   //       decodedToken: decodedToken,
+//   //     },
+//   //   };
+//   // }
 
-  // let subs = await getAllSubscriptions();
-  // return {
-  //   props: { ...subs },
-  // };
-});
+//   // let subs = await getAllSubscriptions();
+//   // return {
+//   //   props: { ...subs },
+//   // };
+// });
 
 export default withAuthUser()(Admin);

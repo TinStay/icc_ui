@@ -1,11 +1,12 @@
 import React, { useState, useCallback, useContext, useEffect } from "react";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 // Mantine
 import {
   Box,
   useMantineTheme,
   MantineTheme,
   createStyles,
+  Indicator,
 } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
 
@@ -27,14 +28,13 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    
+
     [theme.fn.largerThan("xs")]: {
       justifyContent: "space-around",
-      marginTop: theme.spacing.xl * 1.5,
+      marginTop: theme.spacing.xl,
     },
     [theme.fn.largerThan("sm")]: {
       flexDirection: "row",
-      
     },
   },
   calendarPaper: {
@@ -57,8 +57,8 @@ const useStyles = createStyles((theme) => ({
   cleaningsListContainer: {
     marginTop: "10px",
     flexGrow: 1,
-    height: "390px", 
-    overflowY: "scroll", 
+    height: "390px",
+    overflowY: "scroll",
     padding: "0 10px ",
 
     [theme.fn.largerThan("sm")]: {
@@ -76,14 +76,12 @@ const getCleaningDatesPerYearAndMonth = (
   month: string
 ) => {
   let cleanings = [];
-  
-  subscriptionData.AllCleanings[year][month]?.forEach((cleaning) =>
-  {
-    console.log("cleaning.Date", typeof(cleaning.Date.toDate()))
-    cleanings.push(cleaning.Date.toDate())
-  }
-  );
- 
+
+  subscriptionData.AllCleanings[year][month]?.forEach((cleaning) => {
+    console.log("cleaning.Date", typeof cleaning.Date.toDate());
+    cleanings.push(cleaning.Date.toDate());
+  });
+
   return cleanings;
 };
 
@@ -95,7 +93,7 @@ type Props = {
 const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
   // State & Variables
   const { currentMonth, currentYear, nextMonth, nextYear } = getMonthAndYear();
-  
+
   const [cleaningDates, setCleaningDates] = useState<Date[]>(
     getCleaningDatesPerYearAndMonth(subscription, currentYear, currentMonth)
   );
@@ -104,10 +102,10 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
 
   // }, [subscription])
 
-  console.log("cleaningDates",  getCleaningDatesPerYearAndMonth(subscription, currentYear, currentMonth))
-
-  
-
+  console.log(
+    "cleaningDates",
+    getCleaningDatesPerYearAndMonth(subscription, currentYear, currentMonth)
+  );
 
   const theme: MantineTheme = useMantineTheme();
 
@@ -122,7 +120,7 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
   };
   // Style calendar days
   const getStyleForDate = useCallback((date: Date) => {
-    console.log("date", date)
+    console.log("date", date);
     // Today
     let isToday =
       date.getDate() === new Date().getDate() &&
@@ -154,19 +152,66 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
   }, []);
 
   const getDayWithHoverCard = (date: Date) => {
+    // Today
+    let isToday =
+      date.getDate() === new Date().getDate() &&
+      date.getMonth() === new Date().getMonth();
+
+    // Check if it there is a cleaning today
+    let isCleaningDay = false;
+    cleaningDates.forEach((cleaningDate) => {
+      if (
+        cleaningDate.getDate() === date.getDate() &&
+        cleaningDate.getMonth() === date.getMonth()
+      )
+        return (isCleaningDay = true);
+    });
+
     let displayDay = <Box>{date.getDate()}</Box>;
 
     // Display more cleaning info to user on hover
-    if (
-      cleaningDates.find(
-        (cleaningDate) =>
-          cleaningDate.toLocaleDateString() === date.toLocaleDateString()
-      )
-    )
-      displayDay = (
-        <Box onClick={() => selectDateFromCalendar(date)}>
+    // if (
+    //   cleaningDates.find(
+    //     (cleaningDate) =>
+    //       cleaningDate.toLocaleDateString() === date.toLocaleDateString()
+    //   )
+    // )
+
+    let backgroundColor = "none";
+    if (isToday) backgroundColor = theme.colors.lime[5];
+
+    displayDay = (
+      <Box onClick={() => selectDateFromCalendar(date)}>
+        {/* {isToday && isCleaningDay ? (
+          <Box
+            sx={{
+              backgroundColor: backgroundColor,
+              padding: "6px",
+              borderRadius: theme.radius.xl,
+            }}
+          >
+            {date.getDate()}
+          </Box>
+        ) : isToday ? (
+          <Box sx={{ backgroundColor: theme.colors.blue[5] }}>
+            {date.getDate()}
+          </Box>
+        ) : (
           <Box>{date.getDate()}</Box>
-          {/* <HoverCard width={240} shadow="md" >
+        )} */}
+
+        <Box
+          sx={{
+            backgroundColor: backgroundColor,
+            padding:  isToday && !isCleaningDay ? "11px" : "6px",
+            borderRadius: theme.radius.xl,
+            color: isToday && !isCleaningDay && "white"
+          }}
+        >
+          {date.getDate()}
+        </Box>
+
+        {/* <HoverCard width={240} shadow="md" >
           <HoverCard.Target>
             <Box>{date.getDate()}</Box>
           </HoverCard.Target>
@@ -175,8 +220,8 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
             be hidden once mouse is not over both target and dropdown elements
           </HoverCard.Dropdown>
         </HoverCard> */}
-        </Box>
-      );
+      </Box>
+    );
 
     return displayDay;
   };
@@ -191,43 +236,63 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
     showCleaningDetails(cleaning);
   };
 
-  const thisMonthCleanings = subscription.AllCleanings[currentYear]?.[currentMonth] || [];
-  const nextMonthCleanings = subscription.AllCleanings[nextYear]?.[nextMonth] || [];
+  const thisMonthCleanings =
+    subscription.AllCleanings[currentYear]?.[currentMonth] || [];
+  const nextMonthCleanings =
+    subscription.AllCleanings[nextYear]?.[nextMonth] || [];
   const viewCleanings = [...thisMonthCleanings, ...nextMonthCleanings];
-  
+
   return (
     <Box
       my={isDesktopView ? theme.spacing.xl : theme.spacing.sm}
       className={classes.subscriptionDetailsContainer}
     >
-      <Box sx={{ flexGrow: 0, height: "100%",  }}>
+      <Box sx={{ flexGrow: 0, height: "100%" }}>
         {/* Calendar */}
         <CustomizedPaper>
           <Calendar
-            multiple
-            value={cleaningDates}
+            // multiple
+            // value={cleaningDates}
             // value={cleaningDates && cleaningDates.map(date => new Date(date))}
             // onChange={() => {}}
             // onChange={date => console.log('object :>> ', date)}
             // onDayMouseEnter={date => console.log(date)}
             size={isDesktopView ? "md" : "sm"}
-            preventFocus
+            defaultDate={cleaningDates[0]}
             classNames={{
-              calendarBase: classes.calendar,
               day: classes.calendarDay,
             }}
             // getDayProps={(date) => getStyleForDate(date)}
             getDayProps={(date) => ({
-              selected: cleaningDates.some((s) => dayjs(date).isSame(s, 'date')),
-            
+              selected: cleaningDates.some((s) =>
+                dayjs(date).isSame(s, "date")
+              ),
             })}
             renderDay={(date) => getDayWithHoverCard(date)}
+            // renderDay={(date) => {
+            //   const day = date.getDate();
+            //   const today = new Date().getDate();
+
+            //   if (day === today) {
+            //     return (
+            //       <Indicator
+            //         size={isDesktopView ? 16 : 14}
+            //         color="lime"
+            //         offset={-5}
+            //       >
+            //         <div>{day}</div>
+            //       </Indicator>
+            //     );
+            //   } else {
+            //     return null;
+            //   }
+            // }}
           />
         </CustomizedPaper>
       </Box>
       {/* Cleanings list */}
       <Box className={classes.cleaningsListContainer}>
-        {viewCleanings ?
+        {viewCleanings ? (
           viewCleanings?.map((cleaning) => (
             <CleaningBox
               key={cleaning.ID}
@@ -236,7 +301,10 @@ const SubscriptionDetails = ({ subscription, showCleaningDetails }: Props) => {
               defaultCleaningTypes={subscription.DefaultCleaningTypes}
               onShowDetails={() => onShowCleaningDetails(cleaning)}
             />
-          )) : <Box>No Cleanings Available</Box>}
+          ))
+        ) : (
+          <Box>No Cleanings Available</Box>
+        )}
       </Box>
       {/* <Box className={classes.cleaningsListContainer}>
         {viewCleanings &&

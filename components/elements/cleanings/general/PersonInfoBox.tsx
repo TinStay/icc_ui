@@ -80,7 +80,6 @@ const PersonInfoBox = ({ person, openWhatsapp }: Props) => {
                 <Tooltip
                   label={copied ? "Copied" : "Copy"}
                   withArrow
-                  transition="slide-right"
                   position="top"
                   color="blue"
                 >

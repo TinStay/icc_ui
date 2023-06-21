@@ -21,7 +21,7 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 900,
     fontSize: 220,
     lineHeight: 1,
-    marginBottom: theme.spacing.xl * 1.5,
+    marginBottom: theme.spacing.xl,
     color:
       theme.colorScheme === "dark"
         ? theme.colors.dark[4]
@@ -47,7 +47,7 @@ const useStyles = createStyles((theme) => ({
     maxWidth: 500,
     margin: "auto",
     marginTop: theme.spacing.xl,
-    marginBottom: theme.spacing.xl * 1.5,
+    marginBottom: theme.spacing.xl,
   },
 }));
 
