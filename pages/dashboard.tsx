@@ -138,7 +138,7 @@ const Dashboard: NextPage<Props> = (props) => {
           opened={showModal}
           onClose={() => setShowModal(false)}
           onSuccess={() => {
-            setTimeout(() => getSubscriptions(), 500);
+            setTimeout(() => getSubscriptions(), 800);
 
             setShowModal(false);
           }}

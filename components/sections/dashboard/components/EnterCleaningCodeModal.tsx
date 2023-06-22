@@ -40,7 +40,7 @@ function EnterCleaningCodeModal({ opened, onSuccess, onClose, ...props }) {
         });
         setTimeout(() => {
           onSuccess();
-        }, 500);
+        }, 800);
       })
       .catch((err) =>
         showNotification({
