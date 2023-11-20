@@ -19,8 +19,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { IconChevronDown } from "@tabler/icons";
 
-// Types & Constantss
-import UserMenu from "./components/UserMenu";
+
 // Types
 import { HeaderSearchProps } from "@/types";
 
@@ -28,7 +27,9 @@ const HEADER_HEIGHT = 74;
 
 const useStyles = createStyles((theme) => ({
   header: {
-    borderBottom: 0,
+    paddingTop: 7,
+    paddingBottom: 7,
+    borderBottom: "1px solid #e9ecef"
   },
 
   inner: {
@@ -102,7 +103,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const HeaderMenu: React.FC<HeaderSearchProps> = ({ links }) => {
+const HeaderMenu: React.FC<HeaderSearchProps> = ({ links, navbarWidth, children }) => {
   const [opened, { toggle, close }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
@@ -129,16 +130,16 @@ const HeaderMenu: React.FC<HeaderSearchProps> = ({ links }) => {
   ));
 
   return (
-    <Header height={HEADER_HEIGHT} mb={12} className={classes.header}>
-      <Container>
+    <Header mb={12} className={classes.header}>
+      <Container size={navbarWidth}>
         <div className={classes.inner}>
           <Logo width="50px" />
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Group spacing={5} className={classes.links}>
               {items}
             </Group>
-            {/* Dropdown user menu */}
-            <UserMenu />
+            {children}
+            
           </Box>
           <Burger
             opened={opened}

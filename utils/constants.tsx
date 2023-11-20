@@ -83,6 +83,17 @@ export const MenuLinks: HeaderSearchLink[] = [
     label: "Subscriptions",
   },
 ];
+
+export const MenuLinksLandingPage: HeaderSearchLink[] = [
+  {
+    link: "/Services",
+    label: "Services",
+  },
+  {
+    link: "/contact",
+    label: "Contact",
+  },
+];
 // {
 //   link: "/account",
 //   label: "Account",
