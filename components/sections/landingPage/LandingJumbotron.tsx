@@ -90,33 +90,9 @@ export default function LandingJumbotron() {
               clicks.
             </Text>
 
-            {/* <List
-              mt={30}
-              spacing="sm"
-              size="sm"
-              icon={
-                <ThemeIcon size={20} radius="xl">
-                  <IconCheck size={12} stroke={1.5} />
-                </ThemeIcon>
-              }
-            >
-              <List.Item>
-                <b>TypeScript based</b> – build type safe applications, all
-                components and hooks export types
-              </List.Item>
-              <List.Item>
-                <b>Free and open source</b> – all packages have MIT license, you
-                can use Mantine in any project
-              </List.Item>
-              <List.Item>
-                <b>No annoying focus ring</b> – focus ring will appear only when
-                user navigates with keyboard
-              </List.Item>
-            </List> */}
-
             <Group mt={30}>
               <Button radius="xl" size="md" className={classes.control}>
-                <Link href="/login">Sign up</Link>
+                <Link href="/login">Book Cleaning</Link>
               </Button>
               <Button
                 variant="default"
@@ -124,7 +100,7 @@ export default function LandingJumbotron() {
                 size="md"
                 className={classes.control}
               >
-                <Link href="/login"> Log in</Link>
+                <Link href="/login">Sign In</Link>
               </Button>
             </Group>
           </div>

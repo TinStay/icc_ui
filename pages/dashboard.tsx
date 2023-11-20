@@ -13,6 +13,7 @@ import Loader from "../components/elements/general/Loader";
 import Navbar from "@/sections/navbar/Navbar";
 import EnterCleaningCodeModal from "@/sections/dashboard/components/EnterCleaningCodeModal";
 import CleaningsList from "@/sections/dashboard/cleanings/CleaningsList";
+import UserMenu from "@/sections/navbar/components/UserMenu";
 
 import { MenuLinks } from "@/constants";
 // Mantine
@@ -95,7 +96,10 @@ const Dashboard: NextPage<Props> = (props) => {
         backgroundColor: GetBackgroundColorForTheme(),
       }}
     >
-      <Navbar links={MenuLinks} />
+      <Navbar links={MenuLinks}>
+        {/* Dropdown user menu */}
+        <UserMenu />
+        </Navbar>
 
       <Container sx={{ height: "100%" }}>
         <Flex className={classes.subHeader}>

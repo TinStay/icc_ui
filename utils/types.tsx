@@ -156,3 +156,9 @@ export interface HeaderSearchLink {
 export interface NotificationVariantList {
   [type: string]: string;
 }
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+  key: string;
+}
